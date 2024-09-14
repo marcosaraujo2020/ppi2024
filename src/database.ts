@@ -1,7 +1,6 @@
 import fs from "fs";
-import {Database} from "sqlite3";
-
-const DATABASE = "./data.db3";
+import { Database } from "sqlite3";
+import { db_path } from "./config";
 
 let db: Database | null = null;
 
@@ -24,13 +23,13 @@ class SqlError extends Error {
 
 /** apaga o banco */
 export function delete_database(): Promise<void> {
-    return fs.promises.rm(DATABASE, { force: true });
+    return fs.promises.rm(db_path, { force: true });
 }
 
 /** retorna a conecção, conecta se não tiver conectado ainda */
 export function connect(): Database {
     if (db) return db;
-    db = new Database(DATABASE);
+    db = new Database(db_path);
     return db;
 }
 
