@@ -12,6 +12,14 @@ execute `npm start` para rodar o servidor
 
 depois destas etapas, basta rodar `npm start` de novo
 
+## Debugar
+
+depois de baixar os pacotes e criar o banco, você pode executar debugando entrando no vscode e apertando F5
+
+basta salvar as mudanças e o servidor será reiniciado
+
+você também pode debugar os testes, vá na aba de debug do vscode (Ctrl+Shift+D) e escolha `Test` ao invés de `Launch`, e aperte F5
+
 ## Testando
 
 você pode executar os testes com `npm test`, os testes estão em `scripts/test.ts`
