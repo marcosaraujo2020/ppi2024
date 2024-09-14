@@ -1,8 +1,9 @@
 import type { Server } from "http";
 import { reset_promise } from "./reset";
-import { app, port } from "../src/server";
+import { app } from "../src/server";
+import { TEST_PORT } from "../src/config";
 
-const url = `http://127.0.0.1:${port}`;
+const url = `http://127.0.0.1:${TEST_PORT}`;
 
 test("teste do servidor", async () => {
     // espera o reset terminar
@@ -111,6 +112,6 @@ function expectJson(object: any): (r: Response) => Promise<void> {
 
 function ligarServidor(): Promise<Server> {
     return new Promise((resolve) => {
-        const server = app.listen(port, () => resolve(server))
+        const server = app.listen(TEST_PORT, "127.0.0.1", () => resolve(server))
     });
 }

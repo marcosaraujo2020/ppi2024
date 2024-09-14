@@ -1,6 +1,7 @@
-import { port } from "./config";
+import { PORT } from "./config";
 import { app } from "./server";
 
-app.listen(port, () => {
-    console.log("Escutando na porta " + port);
+// roda o servidor e avisa que estamos online
+app.listen(PORT, () => {
+    console.log("Escutando na porta " + PORT);
 });

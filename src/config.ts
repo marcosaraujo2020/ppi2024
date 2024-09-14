@@ -1,2 +1,8 @@
-export const port = 80;
-export const db_path = "./data.db3";
+/** porta do servidor http */
+export const PORT = 8080;
+
+/** porta do servidor http, para ser usada durante os testes */
+export const TEST_PORT = 62234;
+
+/** caminho do banco */
+export const DB_PATH = "./data.db3";
