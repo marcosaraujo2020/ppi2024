@@ -39,7 +39,7 @@ async function create(req: Request<{ sub_forum_id: string, thread_id: string }>,
     const user = await getUsuario(req);
     const sub_forum_id = parseId(req.params.sub_forum_id);
     const thread_id = parseId(req.params.thread_id);
-    expectFound(await db.fetch(`SELECT id WHERE thread = ? AND id = ?`, sub_forum_id, thread_id));
+    expectFound(await db.fetch(`SELECT id FROM thread WHERE sub_forum_id = ? AND id = ?`, sub_forum_id, thread_id));
     const data = validateCreateBody(req.body);
     const id = await db.execute("INSERT INTO mensagem(usuario_id, thread_id, texto) VALUES (?, ?, ?)", user.id, thread_id, data.texto).then(x => x.lastID);
     const row = expectFound(await db.fetch(`
@@ -54,7 +54,7 @@ async function remove(req: Request<{ sub_forum_id: string, thread_id: string, id
     expectAdmin(await getUsuario(req));
     const sub_forum_id = parseId(req.params.sub_forum_id);
     const thread_id = parseId(req.params.thread_id);
-    expectFound(await db.fetch(`SELECT id WHERE thread = ? AND id = ?`, sub_forum_id, thread_id));
+    expectFound(await db.fetch(`SELECT id FROM thread WHERE sub_forum_id = ? AND id = ?`, sub_forum_id, thread_id));
     const id = parseId(req.params.id);
     expectChanges(await db.execute("DELETE FROM sub_forum WHERE thread_id = ? AND id = ?", thread_id, id));
     return res.send();
