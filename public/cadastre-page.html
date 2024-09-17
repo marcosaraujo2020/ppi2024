@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página de Cadastro</title>
+  <link rel="stylesheet" href="css/cadastre.css">
+</head>
+<body>
+  <div class="register-container">
+    <h2>Cadastre-se</h2>
+    <form id="registerForm">
+      <div class="input-field">
+        <label for="username">Usuário</label>
+        <input type="text" id="username" placeholder="Digite seu usuário" required>
+      </div>
+      <div class="input-field">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" placeholder="Digite seu e-mail" required>
+      </div>
+      <div class="input-field">
+        <label for="password">Senha</label>
+        <input type="password" id="password" placeholder="Digite sua senha" required>
+      </div>
+      <div class="input-field">
+        <label for="confirmPassword">Confirme a Senha</label>
+        <input type="password" id="confirmPassword" placeholder="Confirme sua senha" required>
+      </div>
+      <button type="submit" class="register-button">Cadastrar</button>
+      <p id="error-message"></p>
+    </form>
+  </div>
+  
+  <script src="js/cadastre.js"></script>
+</body>
+</html>

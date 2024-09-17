@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sub-Fórum</title>
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="shortcut icon" href="imagens/bate-papo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />   
+</head>
+
+
+<body>
+    <header class="cabecalho">
+        
+        <div class="titulo">
+            <img src="imagens/forum_17520275.png" id="logo" alt="logo">
+            <h1>Fórum do Dev | </h1>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="forum.html"><span class="material-symbols-outlined" data-toggle="tooltip" title="Início">home</span></a></li>
+                    <li><a href="#"><span class="material-symbols-outlined" data-toggle="tooltip" title="Adicionar Post">post_add</span></a></li>
+                    <li><a href=""><span class="material-symbols-outlined"data-toggle="tooltip" title="Pesquisar">search</span></a></li>
+                    <li>  
+                        <select name="temas" id="list-search">
+                            <option value=""></option>
+                            <option value="">Javascript</option>
+                            <option value="">Linux</option>
+                            <option value="">Python</option>
+                            <option value="">C#</option>
+                        </select>  
+                    </li>
+            </nav>
+        </div>
+
+        <div class="btn-nav">
+            <nav>
+                <a href="cadastre-page.html"><button class="btn-cadastrar-conta">Cadastre-se</button></a>
+                <a href="login-page.html"><button class="btn-login">Entrar</button></a>
+            </nav>
+        </div>
+
+        <div class="icon-user">
+            <span class="material-symbols-outlined" id="icon-user" data-toggle="tooltip" title="Usuário">account_circle</span>
+            <p>User</p>
+        </div>
+        
+    </header>
+
+    <main class="principal">
+        <h4 id="titulo-sub-forum">Fórum: Javascript</h4>
+        <section class="topico-sub-forum">
+            <div class="tema-sub-forum">
+                <h4>Sub-Fórums</h4>
+            </div>
+            
+            <article class="post-forum">
+                <h4 class="titulo-topico"> Como capturar HTML editado no Textarea usando JavaScript?</h4>
+                
+                <p class="autor-topico">Por: <span class="nome-autor">João da Silva</span> em <span class="data-postagem">14/09/2024 </span></p>
+            </article>    
+        </section>
+
+        <section class="topico-sub-forum">
+            <div class="tema-sub-forum-thread">
+                <h5>Title / Thread Starter</h5>
+            </div>
+            
+            <article class="post-forum">
+                <a href="thread.html">
+                    <h4 class="titulo-topico">Capturando HTML Editado em um Textarea com JavaScript</h4>
+                </a>
+                
+                <p class="autor-topico">Iniciado por <span class="nome-autor">Maria de Sousa</span> em <span class="data-postagem">14/09/2024 </span></p>
+            </article>
+            <hr>
+        </section>
+        
+    </main>
+
+    <footer></footer>
+
+</body>
+</html>
