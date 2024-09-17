@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="css/estilo.css">
     <link rel="shortcut icon" href="imagens/forum_17520275.png" type="image/x-icon">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />   
+
+    <script src="js/app-forum.js"></script>
 </head>
 
 
@@ -19,7 +21,7 @@
             <nav class="navbar">
                 <ul>
                     <li><a href="forum.html"><span class="material-symbols-outlined" data-toggle="tooltip" title="Início">home</span></a></li>
-                    <li><a href="#"><span class="material-symbols-outlined" data-toggle="tooltip" title="Adicionar Post">post_add</span></a></li>
+                    <li><a href="#"><span class="material-symbols-outlined" data-toggle="tooltip" title="Novo fórum" id="novoforum">post_add</span></a></li>
                     <li><a href=""><span class="material-symbols-outlined"data-toggle="tooltip" title="Pesquisar">search</span></a></li>
                     <li>  
                         <select name="temas" id="list-search">
@@ -44,10 +46,35 @@
             <span class="material-symbols-outlined" id="icon-user" data-toggle="tooltip" title="Usuário">account_circle</span>
             <p>User</p>
         </div>
+
+        <div class="icon-logout">
+            <a href="#"><span class="material-symbols-outlined" id="icon-logout" data-toggle="tooltip" title="Sair">logout</span></a>
+        </div>
         
     </header>
 
     <main class="principal">
+
+        <section id="formulario" class="oculto">
+            <form id="novaPostagemForm">
+                <h2>Novo Fórum</h2>
+                <label for="tecnologia">Tecnologia:</label>
+                <select name="tecnologia" id="tecnologia">
+                    <option value="">selecione</option>
+                    <option value="">Javascript</option>
+                    <option value="">Linux</option>
+                </select>
+                <br>
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" name="titulo" required>
+                <br>
+                <label for="conteudo">Conteúdo:</label>
+                <textarea id="conteudo" name="conteudo" required></textarea>
+                <br>
+                <button type="submit" id="btn-enviar">Enviar</button>
+            </form>
+        </section>
+
         <section class="topico">
             <div class="tema">
                 <h4>Javascript</h4>
