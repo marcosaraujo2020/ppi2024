@@ -16,7 +16,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
     return;
   }
 
-  const result = await api.signup({ nome: username, email, senha: password });
+  const result = await api.auth.signup({ nome: username, email, senha: password });
   if (result.status == 200) {
     history.replaceState(null, "", "/forum.html");
     document.location = "/forum.html";

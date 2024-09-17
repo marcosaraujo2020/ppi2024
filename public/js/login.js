@@ -7,7 +7,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
   const password = document.getElementById("password").value;
   const errorMessage = document.getElementById("error-message");
 
-  const result = await api.login({email, senha: password});
+  const result = await api.auth.login({email, senha: password});
   if (result.status == 200) {
     history.replaceState(null, "", "/forum.html");
     document.location = "/forum.html";

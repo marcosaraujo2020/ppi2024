@@ -39,7 +39,7 @@ async function signup(req: Request, res: Response) {
     // cria uma sessão aleatória
     const sessao = await generateRandomSHA256Hash();
     // cria o usuário já com a sessão
-    const id = await db.execute(`INSERT INTO usuario (nome, email, senha, sessao, sessao_validade) VALUES (?, ?, ?, ?, DATETIME(CURRENT_TIMESTAMP, '+${sessionMaxAgeSeconds} seconds'))`, nome, email, senha, sessao).then(x => x.lastID);
+    const id = await db.execute(`INSERT INTO usuario (nome, email, senha, sessao, sessao_validade) VALUES (?, ?, ?, ?, DATETIME('now', '+${sessionMaxAgeSeconds} seconds'))`, nome, email, senha, sessao).then(x => x.lastID);
     // retorna o id do usuário criado com o header que salva a sessão no cookie
     return res.cookie(sessionCookieName, sessao, {
         path: "/",
@@ -53,11 +53,12 @@ async function login(req: Request, res: Response) {
     // cria uma sessão aleatória
     const sessao = await generateRandomSHA256Hash();
     // salva a nova sessão no banco
-    const result = await db.execute("UPDATE usuario SET sessao = ?, sessao_validade = DATETIME(CURRENT_TIMESTAMP, '+${sessionMaxAgeSeconds} seconds') WHERE email = ? AND senha = ?", sessao, email, senha);
+    const result = await db.execute(`UPDATE usuario SET sessao = ?, sessao_validade = DATETIME('now', '+${sessionMaxAgeSeconds} seconds') WHERE email = ? AND senha = ?`, sessao, email, senha);
     if (result.changes === 0) {
         // se nada foi removido então FORBIDDEN
         return res.status(FORBIDDEN).send();
     }
+    console.log(await db.query("SELECT nome, sessao, sessao_validade FROM usuario"));
     // retorna a resposta com o header que salva a sessão no cookie
     return res.cookie(sessionCookieName, sessao, {
         path: "/",
@@ -88,7 +89,7 @@ async function logoff(req: Request, res: Response) {
         return res.status(UNAUTHORIZED).send();
     }
     // remove a sessão do banco
-    const result = await db.execute("UPDATE usuario SET sessao = NULL, sessao_validade = NULL WHERE sessao = ? AND sessao_validade > CURRENT_TIMESTAMP", sessao);
+    const result = await db.execute("UPDATE usuario SET sessao = NULL, sessao_validade = NULL WHERE sessao = ? AND datetime(sessao_validade) > datetime('now')", sessao);
     if (result.changes === 0) {
         // se nada foi removido então FORBIDDEN
         return res.status(FORBIDDEN).send();
@@ -136,7 +137,7 @@ export async function getUsuario(req: Request): Promise<User> {
     // obtém a sessão do request
     const sessao = getSessao(req);
     // obtém o usuário do banco
-    const user = sessao && await db.fetch("SELECT id, nome, email, admin FROM usuario WHERE sessao = ? AND sessao_validade > CURRENT_TIMESTAMP", sessao);
+    const user = sessao && await db.fetch("SELECT id, nome, email, admin FROM usuario WHERE sessao = ? AND datetime(sessao_validade) > datetime('now')", sessao);
     if (!user) throw new StatusException(UNAUTHORIZED);
     return user
 }
