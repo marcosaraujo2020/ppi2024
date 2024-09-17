@@ -5,10 +5,7 @@
             "name": "Launch",
             "type": "node",
             "request": "launch",
-            "runtimeExecutable": "${workspaceFolder}/node_modules/nodemon/bin/nodemon",
             "args": [
-                "-x",
-                "node",
                 "-r",
                 "sucrase/register",
                 "--inspect",

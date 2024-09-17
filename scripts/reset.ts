@@ -4,6 +4,7 @@ async function create() {
     await db.execute(`CREATE TABLE usuario (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT NOT NULL,
+        email TEXT NOT NULL,
         senha TEXT NOT NULL,
         admin BOOLEAN NOT NULL DEFAULT FALSE,
         sessao TEXT,
@@ -38,9 +39,9 @@ async function create() {
 }
 
 async function populate() {
-    await db.execute(`INSERT INTO usuario (nome, senha, admin) VALUES
-        ('Germano', '12345', TRUE),
-        ('Marcos', '12345', TRUE);
+    await db.execute(`INSERT INTO usuario (nome, email, senha, admin) VALUES
+        ('Germano', 'kernel32dev@gmail.com', '12345', TRUE),
+        ('Marcos', 'marcos@gmail.com', '12345', TRUE);
     `);
 
     // Germano = 1

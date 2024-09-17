@@ -3,6 +3,7 @@
     "name": "ppi2024",
     "scripts": {
         "start": "node -r sucrase/register src/main.ts",
+        "watch": "nodemon -x node -r sucrase/register src/main.ts",
         "reset": "node -r sucrase/register scripts/reset.ts",
         "test": "jest"
     },

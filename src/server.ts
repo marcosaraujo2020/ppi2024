@@ -18,10 +18,13 @@ app.use(cookieMiddleware());
 // serve os arquivos na pasta public na raiz
 app.use(express.static('public'));
 
+app.get("/api/usuario", catchApiExceptions(auth.api.usuario));
+
 app.post("/api/signup", catchApiExceptions(auth.api.signup));
-app.post("/api/login", catchApiExceptions(auth.api.login));
 app.post("/api/signoff", catchApiExceptions(auth.api.signoff));
-app.post("/api/logoff", catchApiExceptions(auth.api.logoff));
+
+app.post("/api/login", catchApiExceptions(auth.api.login));
+app.delete("/api/login", catchApiExceptions(auth.api.logoff));
 
 app.get("/api/sub_forum", catchApiExceptions(subForum.api.list));
 app.get("/api/sub_forum/:id", catchApiExceptions(subForum.api.get));
