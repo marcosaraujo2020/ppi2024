@@ -21,6 +21,16 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     }
 
+    api.auth.user().then(x => {
+        if (x.status == 200) {
+            document.getElementById("user-name").innerText = x.body.nome;
+        }   
+    });
+
+    document.getElementById("logout-btn").addEventListener("click", async () => {
+        await api.auth.logoff();
+        location.reload();
+    });
 });
 
 
