@@ -20,11 +20,10 @@ async function create() {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         sub_forum_id INTEGER NOT NULL,
         usuario_id INTEGER NOT NULL,
-        nome TEXT NOT NULL,
-        descricao TEXT NOT NULL,
+        titulo TEXT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (sub_forum_id) REFERENCES sub_forum(id),
-        FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+        FOREIGN KEY (sub_forum_id) REFERENCES sub_forum(id) ON DELETE CASCADE ON UPDATE CASCADE,
+        FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE NO ACTION ON UPDATE CASCADE
     )`);
 
     await db.execute(`CREATE TABLE mensagem (
@@ -33,8 +32,8 @@ async function create() {
         usuario_id INTEGER NOT NULL,
         texto TEXT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (thread_id) REFERENCES thread(id),
-        FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+        FOREIGN KEY (thread_id) REFERENCES thread(id) ON DELETE CASCADE ON UPDATE CASCADE,
+        FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE NO ACTION ON UPDATE CASCADE
     )`);
 }
 
@@ -55,9 +54,9 @@ async function populate() {
     // Javascript = 1
     // Linux = 2
 
-    await db.execute(`INSERT INTO thread (sub_forum_id, usuario_id, nome, descricao) VALUES
-        (1, 1, 'Javascript', 'Como clonar um objeto recursivamente no javascript'),
-        (2, 2, 'Linux', 'Como apago todos os node_modules recursivamente com find');
+    await db.execute(`INSERT INTO thread (sub_forum_id, usuario_id, titulo) VALUES
+        (1, 1, 'Como clonar um objeto recursivamente no javascript'),
+        (2, 2, 'Como apago todos os node_modules recursivamente com find');
     `);
 
     // Pergunta do Javascript = 1
@@ -75,4 +74,4 @@ async function populate() {
  *
  * nós exportamos a promessa para que o teste possa saber quando o reset terminou
  */
-export const reset_promise = db.delete_database().then(create).then(populate);
+export const reset_promise = db.deleteDatabase().then(create).then(populate);

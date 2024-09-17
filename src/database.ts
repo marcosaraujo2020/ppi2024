@@ -4,29 +4,6 @@ import { DB_PATH } from "./config";
 
 let db: Database | null = null;
 
-/** essa classe melhora um pouco as mensagens de erro de sql, mostrando a query que deu erro, e substitui os parâmetros antes de mostrar */
-class SqlError extends Error {
-    constructor(query: string, args: any[], cause?: Error) {
-        const chunks = query.split("?");
-        query = chunks.map((chunk, index) => {
-            if (index == chunks.length - 1) {
-                return chunk;
-            } else if (index < args.length) {
-                return chunk + JSON.stringify(args[index]);
-            } else {
-                return chunk + "?";
-            }
-        }).join("");
-        super("erro na query:\n" + query);
-        this.cause = cause;
-    }
-}
-
-/** apaga o banco */
-export function delete_database(): Promise<void> {
-    return fs.promises.rm(DB_PATH, { force: true });
-}
-
 /** retorna o banco, conecta se não tiver conectado ainda */
 export function connect(): Database {
     if (db) return db;
@@ -39,7 +16,7 @@ export function fetch<T = any>(sql: string, ...params: any[]): Promise<T | undef
     return new Promise((resolve, reject) => {
         connect().get(sql, params, (error, row) => {
             if (error) {
-                reject(new SqlError(sql, params, error));
+                reject(makeBetterSqlError(sql, params, error));
             } else {
                 resolve(row as T);
             }
@@ -52,7 +29,7 @@ export function query<T = any>(sql: string, ...params: any[]): Promise<T[]> {
     return new Promise((resolve, reject) => {
         connect().all(sql, params, (error, rows) => {
             if (error) {
-                reject(new SqlError(sql, params, error));
+                reject(makeBetterSqlError(sql, params, error));
             } else {
                 resolve(rows as T[]);
             }
@@ -68,7 +45,7 @@ export function execute(sql: string, ...params: any[]): Promise<{
     return new Promise((resolve, reject) => {
         connect().run(sql, params, function (error) {
             if (error) {
-                reject(new SqlError(sql, params, error));
+                reject(makeBetterSqlError(sql, params, error));
             } else {
                 resolve({
                     lastID: this.lastID,
@@ -77,4 +54,24 @@ export function execute(sql: string, ...params: any[]): Promise<{
             }
         })
     });
+}
+
+/** apaga o banco */
+export function deleteDatabase(): Promise<void> {
+    return fs.promises.rm(DB_PATH, { force: true });
+}
+
+/** essa função melhora um pouco as mensagens de erro de sql, mostrando a query que deu erro, e substitui os parâmetros antes de mostrar */
+function makeBetterSqlError(query: string, args: any[], cause?: Error): Error {
+    const chunks = query.split("?");
+    query = chunks.map((chunk, index) => {
+        if (index == chunks.length - 1) {
+            return chunk;
+        } else if (index < args.length) {
+            return chunk + JSON.stringify(args[index]);
+        } else {
+            return chunk + "?";
+        }
+    }).join("");
+    return new Error("erro na query:\n" + query, { cause });
 }
