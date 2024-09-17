@@ -127,6 +127,73 @@ li a {
 }
 
 
+.oculto {
+    display: none;
+}
+
+
+section#formulario {
+    margin-top: 20px;
+    padding: 20px;
+    width: 150vh;   
+    border: 1px solid var(--cor-borda);
+    border-radius: 10px;
+    background-color: aliceblue;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+form h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: var(--cor-texto-secundario);
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--cor-texto-secundario);
+}
+
+form input, form select {
+    width: 100%;
+    height: 3vw;
+    margin-bottom: 15px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: var(--cor2);
+    color: var(--cor0);
+}
+
+form textarea {
+    width: 100%;
+    height: 5vw;
+    margin-bottom: 15px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: var(--cor2);
+    color: var(--cor0);
+}
+
+
+form button {
+    border-color: var(--cor0); 
+    height: 30px;
+    width: 90px;
+    color: var(--cor0);   
+    background-color: var(--cor1);
+    color: black;
+    border-radius: 5px;
+    border: none;
+}
+
+form button:hover {
+    background-color: var(--cor2);
+    cursor: pointer;
+}
+
 .topico{
     background-color: aliceblue;
     height: auto;
@@ -215,15 +282,20 @@ li a {
     color: white;
 }
 
-.icon-user{
-    padding-right:  50px;
-}
-
 .icon-user > p{
     color: white;
     font-family: monospace;
     margin: 0%;
 }
+
+#icon-logout{
+    color: white;
+}
+
+.icon-logout{
+    padding-right:  50px;
+}
+
 
 hr {
     color: var(--cor2);
