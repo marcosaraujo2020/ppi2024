@@ -65,6 +65,9 @@ li a {
     margin-left: 40px;
     margin-right: 40px;
 }
+.logado .btn-nav {
+    display: none;
+}
 
 .titulo {
     display: flex;
@@ -74,6 +77,19 @@ li a {
     margin-left: 50px;
 }
 
+.icon-user {
+    display: none;
+}
+.logado .icon-user {
+    display: block;
+}
+
+.icon-logout {
+    display: none;
+}
+.logado .icon-logout {
+    display: block;
+}
 
 #logo {
     margin-right: 15px;

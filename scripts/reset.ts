@@ -40,7 +40,7 @@ async function create() {
 
 async function populate() {
     await db.execute(`INSERT INTO usuario (nome, email, senha, admin) VALUES
-        ('Germano', 'kernel32dev@gmail.com', '12345', TRUE),
+        ('Germano', 'germano@gmail.com', '12345', TRUE),
         ('Marcos', 'marcos@gmail.com', '12345', TRUE);
     `);
 
