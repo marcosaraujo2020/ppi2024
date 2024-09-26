@@ -195,14 +195,21 @@ form textarea {
 
 
 form button {
+    display: flex;
+    align-items: center;
     border-color: var(--cor0); 
     height: 30px;
-    width: 90px;
+    width: auto;
     color: var(--cor0);   
     background-color: var(--cor1);
-    color: black;
+    color: var(--cor0);
     border-radius: 5px;
     border: none;
+   padding: 10px;
+}
+
+form button span {
+    color: var(--cor0);
 }
 
 form button:hover {
@@ -250,17 +257,31 @@ form button:hover {
     font-family: "Inconsolata", monospace;
     font-optical-sizing: auto;
     font-weight: 350;
-    font-style: normal;
+    font-style: italic;
     font-size: 12px;
     font-variation-settings: "wdth" 100;
 }
+
+#link-titulo-topico {
+    text-decoration: none;
+    color: var(--cor4);
+}
+
+#link-titulo-topico:hover {
+    color: var(--cor3);
+}
+  
   
 #feedback{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 5px;
-    width: 145vh;
+    margin: 0px;
+    width: 190vh;
+}
+
+#autor { 
+    width: auto;
 }
 
 #numero-visualizacoes, #numero-respostas {
@@ -296,6 +317,12 @@ form button:hover {
 
 #icon-user{
     color: white;
+}
+
+.icon-user {
+    text-align: center;
+    padding: 3px;
+    border-radius: 5px;
 }
 
 .icon-user > p{

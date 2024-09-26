@@ -11,10 +11,8 @@
     <script src="js/app-forum.js"></script>
 </head>
 
-
 <body>
     <header class="cabecalho">
-        
         <div class="titulo">
             <img src="imagens/forum_17520275.png" id="logo" alt="logo">
             <h1>Fórum do Dev | </h1>
@@ -54,15 +52,14 @@
     </header>
 
     <main class="principal">
-
-        <section id="formulario" class="oculto">
+     
+        <section type="submit" id="formulario" class="oculto">
             <form id="novaPostagemForm">
                 <h2>Novo Fórum</h2>
                 <label for="tecnologia">Tecnologia:</label>
                 <select name="tecnologia" id="tecnologia">
-                    <option value="">selecione</option>
-                    <option value="">Javascript</option>
-                    <option value="">Linux</option>
+                    <option value="1">Javascript</option>
+                    <option value="2">Linux</option>
                 </select>
                 <br>
                 <label for="titulo">Título:</label>
@@ -71,80 +68,17 @@
                 <label for="conteudo">Conteúdo:</label>
                 <textarea id="conteudo" name="conteudo" required></textarea>
                 <br>
-                <button type="submit" id="btn-enviar">Enviar</button>
+                <button type="submit" id="btn-enviar"><span class="material-symbols-outlined">add</span> Add Post</button>
             </form>
         </section>
 
-        <section class="topico">
-            <div class="tema">
-                <h4>Javascript</h4>
-            </div>
-            
-            <article class="post-forum">
-                <h4 class="titulo-topico"> Como capturar HTML editado no Textarea usando JavaScript?</h4>
-                
-                <p class="descricao-topico">Escrevo no textarea e o script preenche o quadro auxiliar (ao lado) com as tags de formatação html. Preciso pegar este código com tags do quadro ao lado e salvar ou enviar para outra pagina.</p>
-                
-                <p class="autor-topico">Por: <span class="nome-autor">João da Silva</span> em <span class="data-postagem">14/09/2024 </span></p>
-                
-                <div id="feedback">
-                    <div class="icones">
-                        <!-- <span class="material-symbols-outlined">thumb_up</span> -->
-                        <a href="#"><span class="material-symbols-outlined" data-toggle="tooltip" title="Visualizações" >visibility</span></a>
-                        <p id="numero-visualizacoes">3</p>
-                        <a href="sub-forum.html"><span class="material-symbols-outlined" data-toggle="tooltip" title="Respostas">mode_comment</span></a>
-                        <p id="numero-respostas">1</p>
-                    </div>
-                </div>
-            </article>
-            <hr>
-            <article class="post-forum">
-                <h4 class="titulo-topico"> Erro ao clicar no botão de sortear : script.js:12 Uncaught TypeError: Cannot read properties of undefined</h4>
-                
-                <p class="descricao-topico">Está aparecendo esse erro ao clicar no botão de sortear : script.js:12 Uncaught TypeError: Cannot read properties of undefined (reading ''''add'''')
-                    at script.js:12:22</p>
-                
-                <p class="autor-topico">Por: <span class="nome-autor">João da Silva</span> em <span class="data-postagem">14/09/2024 </span></p>
-                
-                <div id="feedback">
-                    <div class="icones">
-                        <!-- <span class="material-symbols-outlined">thumb_up</span> -->
-                        <a href="#"><span class="material-symbols-outlined" data-toggle="tooltip" title="Visualizações" >visibility</span></a>
-                        <p id="numero-visualizacoes">2</p>
-                        <a href="sub-forum.html"><span class="material-symbols-outlined" data-toggle="tooltip" title="Respostas">mode_comment</span></a>
-                        <p id="numero-respostas">13</p>
-                    </div>
-                </div>
-            </article>
-            
+      <!--   <div id="testando" class="topico" ></div> -->
+
+        <section id="teste" class="topico">
+            <div class="tema"><h4>Javascript</h4></div>
+          
         </section>
 
-        <section class="topico">
-            <div class="tema">
-                <h4>Linux</h4>
-            </div>
-            
-            <article class="post-forum">
-                <h4 class="titulo-topico"> Gostaria de saber como fazer instalação e atualização do Ubuntu?</h4>
-                
-                <p class="descricao-topico">Dúvidas e problemas na instalação e atualização do Linux Ubuntu.</p>
-                
-                <p class="autor-topico">Por: <span class="nome-autor">João da Silva</span> em <span class="data-postagem">14/09/2024 </span></p>
-                
-                <div id="feedback">
-                    <div class="icones">
-                        <!-- <span class="material-symbols-outlined">thumb_up</span> -->
-                        <a href="#"><span class="material-symbols-outlined" data-toggle="tooltip" title="Visualizações" >visibility</span></a>
-                        <p id="numero-visualizacoes">0</p>
-                        <a href="sub-forum.html"><span class="material-symbols-outlined" data-toggle="tooltip" title="Respostas">mode_comment</span></a>
-                        <p id="numero-respostas">6</p>
-                    </div>
-                </div>
-            </article>
-            <hr>
-          
-            
-        </section>
     </main>
 
     <footer></footer>
