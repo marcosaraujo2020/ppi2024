@@ -151,7 +151,7 @@ li a {
 section#formulario {
     margin-top: 20px;
     padding: 20px;
-    width: 150vh;   
+    width: 70vw;   
     border: 1px solid var(--cor-borda);
     border-radius: 10px;
     background-color: aliceblue;
@@ -220,7 +220,7 @@ form button:hover {
 .topico{
     background-color: aliceblue;
     height: auto;
-    width: 200vh;
+    width: 80vw;
     margin-top: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
@@ -231,7 +231,7 @@ form button:hover {
     color: white;
     border-radius: 5px 5px 0px 0px;
     background-color: var(--cor2);
-    width: 200vh;
+    width: 80vw;
 }
 
 .tema > h4 {
@@ -240,7 +240,6 @@ form button:hover {
 
 .post-forum {
     height: auto;
-    width: 195vh;
     margin: 20px 20px 0px 20px;
 }
 
@@ -277,7 +276,6 @@ form button:hover {
     align-items: center;
     justify-content: space-between;
     margin: 0px;
-    width: 190vh;
 }
 
 #autor { 
@@ -354,7 +352,7 @@ hr {
 .topico-sub-forum {
     background-color: aliceblue;
     height: auto;
-    width: 200vh;
+    width: 80vw;
     margin-top: 0px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -367,7 +365,7 @@ hr {
     color: white;
     border-radius: 5px 5px 0px 0px;
     background-color: var(--cor2);
-    width: 200vh;
+    width: 80vw;
 }
 
 .tema-sub-forum > h4 {
@@ -380,7 +378,7 @@ hr {
     color: white;
     border-radius: 5px 5px 0px 0px;
     background-color: var(--cor2);
-    width: 200vh;
+    width: 80vw;
 }
 
 .tema-sub-forum-thread > h5 {
@@ -404,7 +402,7 @@ hr {
 .topico-thread  {
     background-color: aliceblue;
     height: auto;
-    width: 200vh;
+    width: 80vw;
     margin-top: 0px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -418,7 +416,7 @@ hr {
     color: white;
     border-radius: 5px 5px 0px 0px;
     background-color: var(--cor2);
-    width: 200vh;
+    width: 80vw;
 }
 
 .tema-thread > p {

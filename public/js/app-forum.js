@@ -56,8 +56,8 @@ document.addEventListener('DOMContentLoaded', function() {
             descricao_topico.className = 'descricao-topico';
             article.className = 'post-forum';
             
-            titulo_topico.innerText = response.body.rows[subforum.id].nome;
-            descricao_topico.innerText = response.body.rows[subforum.id].descricao;
+            titulo_topico.innerText = subforum.nome;
+            descricao_topico.innerText = subforum.descricao;
             
             ancora.appendChild(titulo_topico);
           
