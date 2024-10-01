@@ -21,7 +21,7 @@ async function testar_servidor() {
             { "id": 1, "nome": "Javascript", "descricao": "Este sub-forum é dedicado a perguntas, respostas e discussão de tudo relacionado ao Javascript" }
         );
     });
-    await GET("/api/sub_forum/1/thread").then(({ status, body }) => {
+    await GET("/api/sub_forum/1/topico").then(({ status, body }) => {
         expect(status).toBe(OK);
         expect(new Date(body.rows[0].created_at).getTime()).not.toBeNaN();
         body.rows[0].created_at = "";
@@ -37,7 +37,7 @@ async function testar_servidor() {
             ],
         });
     });
-    await GET("/api/sub_forum/1/thread/1").then(({ status, body }) => {
+    await GET("/api/sub_forum/1/topico/1").then(({ status, body }) => {
         expect(status).toBe(OK);
         expect(new Date(body.created_at).getTime()).not.toBeNaN();
         body.created_at = "";
@@ -49,7 +49,7 @@ async function testar_servidor() {
             "usuario_nome": "Germano",
         });
     });
-    await GET("/api/sub_forum/1/thread/1/mensagem").then(({ status, body }) => {
+    await GET("/api/sub_forum/1/topico/1/mensagem").then(({ status, body }) => {
         expect(status).toBe(OK);
         body.rows.forEach((row: any) => {
             expect(new Date(row.created_at).getTime()).not.toBeNaN();
@@ -74,7 +74,7 @@ async function testar_servidor() {
             ],
         });
     });
-    await GET("/api/sub_forum/1/thread/1/mensagem/1").then(({ status, body }) => {
+    await GET("/api/sub_forum/1/topico/1/mensagem/1").then(({ status, body }) => {
         expect(status).toBe(OK);
         expect(new Date(body.created_at).getTime()).not.toBeNaN();
         body.created_at = "";

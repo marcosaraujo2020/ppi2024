@@ -19,16 +19,11 @@
             <nav class="navbar">
                 <ul>
                     <li><a href="forum.html"><span class="material-symbols-outlined" data-toggle="tooltip" title="Início">home</span></a></li>
-                    <li><a href="#"><span class="material-symbols-outlined" data-toggle="tooltip" title="Novo fórum" id="novoforum">post_add</span></a></li>
+                    <li><a href="#"><span class="material-symbols-outlined" data-toggle="tooltip" title="Novo Tópico" id="novotopico">post_add</span></a></li>
+                    <li>&nbsp;&nbsp;&nbsp;</li>
                     <li><a href=""><span class="material-symbols-outlined"data-toggle="tooltip" title="Pesquisar">search</span></a></li>
-                    <li>  
-                        <select name="temas" id="list-search">
-                            <option value=""></option>
-                            <option value="">Javascript</option>
-                            <option value="">Linux</option>
-                            <option value="">Python</option>
-                            <option value="">C#</option>
-                        </select>  
+                    <li>
+                        <input type="text" name="temas" id="list-search">
                     </li>
             </nav>
         </div>
@@ -54,8 +49,8 @@
     <main class="principal">
      
         <section type="submit" id="formulario" class="oculto">
-            <form id="novaPostagemForm">
-                <h2>Novo Fórum</h2>
+            <form id="novoTopicoForm">
+                <h2>Novo Tópico</h2>
                 <label for="tecnologia">Tecnologia:</label>
                 <select name="tecnologia" id="tecnologia">
                     <option value="1">Javascript</option>
@@ -68,15 +63,14 @@
                 <label for="conteudo">Conteúdo:</label>
                 <textarea id="conteudo" name="conteudo" required rows="9" style="min-height: 9lh;"></textarea>
                 <br>
-                <button type="submit" id="btn-enviar"><span class="material-symbols-outlined">add</span> Add Post</button>
+                <button type="submit" id="btn-enviar"><span class="material-symbols-outlined">add</span> Cria tópico</button>
             </form>
         </section>
 
       <!--   <div id="testando" class="topico" ></div> -->
 
         <section id="teste" class="topico">
-            <div class="tema"><h4>Javascript</h4></div>
-          
+            <div class="tema"><h4>Sub-Fórums</h4></div>
         </section>
 
     </main>

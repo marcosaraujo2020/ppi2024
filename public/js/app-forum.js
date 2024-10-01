@@ -34,24 +34,20 @@ document.addEventListener('DOMContentLoaded', function() {
             var article = document.createElement('article');
             var hr = document.createElement('hr');
             var div_feedback = document.createElement('div');
-            var div_autor = document.createElement('div');
+            var div_esquerda = document.createElement('div');
             var div_icones = document.createElement('div');
-            var autor_topico = document.createElement('p');
             var span_icone = document.createElement('span');
             var span_icone2 = document.createElement('span');
 
-            div_feedback.id ='feedback';
-            div_autor.id = 'autor';
-            div_icones.id = 'icones';
-            autor_topico.className = 'autor-topico';
-            autor_topico.innerText = 'Postado por ';
+            div_feedback.className ='feedback';
+            div_icones.className = 'icones';
             span_icone.className = 'material-symbols-outlined';
             span_icone.innerText = 'visibility';
             span_icone2.className = 'material-symbols-outlined';
             span_icone2.innerText = 'mode_comment';
             div.className = 'conteudo-forum';
-            ancora.href = 'sub-forum.html'
-            ancora.id = 'link-titulo-topico';
+            ancora.href = 'sub-forum.html?id=' + subforum.id;
+            ancora.className = 'link-titulo-topico';
             titulo_topico.className = 'titulo-topico';
             descricao_topico.className = 'descricao-topico';
             article.className = 'post-forum';
@@ -63,10 +59,9 @@ document.addEventListener('DOMContentLoaded', function() {
           
             div.appendChild(ancora);
             div.appendChild(descricao_topico);
-            div_autor.appendChild(autor_topico);
             div_icones.appendChild(span_icone);
             div_icones.appendChild(span_icone2);
-            div_feedback.appendChild(div_autor);
+            div_feedback.appendChild(div_esquerda);
             div_feedback.appendChild(div_icones);
             article.appendChild(div);
             article.appendChild(div_feedback);
@@ -76,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
         
 
-    document.getElementById('novoforum').addEventListener('click', function(){
+    document.getElementById('novotopico').addEventListener('click', function(){
         novoFormulario.classList.remove('oculto');
     });
 

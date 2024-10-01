@@ -2,7 +2,7 @@ import express from "express";
 import cookieMiddleware from "cookie-parser";
 import * as auth from "./api/auth";
 import * as subForum from "./api/subForum";
-import * as thread from "./api/thread";
+import * as topico from "./api/topico";
 import * as mensagem from "./api/mensagem";
 import { catchApiExceptions } from "./utils";
 
@@ -31,15 +31,15 @@ app.get("/api/sub_forum/:id", catchApiExceptions(subForum.api.get));
 app.post("/api/sub_forum", catchApiExceptions(subForum.api.create));
 app.delete("/api/sub_forum/:id", catchApiExceptions(subForum.api.remove));
 
-app.get("/api/sub_forum/:sub_forum_id/thread", catchApiExceptions(thread.api.list));
-app.get("/api/sub_forum/:sub_forum_id/thread/:id", catchApiExceptions(thread.api.get));
-app.post("/api/sub_forum/:sub_forum_id/thread", catchApiExceptions(thread.api.create));
-app.delete("/api/sub_forum/:sub_forum_id/thread/:id", catchApiExceptions(thread.api.remove));
+app.get("/api/sub_forum/:sub_forum_id/topico", catchApiExceptions(topico.api.list));
+app.get("/api/sub_forum/:sub_forum_id/topico/:id", catchApiExceptions(topico.api.get));
+app.post("/api/sub_forum/:sub_forum_id/topico", catchApiExceptions(topico.api.create));
+app.delete("/api/sub_forum/:sub_forum_id/topico/:id", catchApiExceptions(topico.api.remove));
 
-app.get("/api/sub_forum/:sub_forum_id/thread/:thread_id/mensagem", catchApiExceptions(mensagem.api.list));
-app.get("/api/sub_forum/:sub_forum_id/thread/:thread_id/mensagem/:id", catchApiExceptions(mensagem.api.get));
-app.post("/api/sub_forum/:sub_forum_id/thread/:thread_id/mensagem", catchApiExceptions(mensagem.api.create));
-app.delete("/api/sub_forum/:sub_forum_id/thread/:thread_id/mensagem/:id", catchApiExceptions(mensagem.api.remove));
+app.get("/api/sub_forum/:sub_forum_id/topico/:topico_id/mensagem", catchApiExceptions(mensagem.api.list));
+app.get("/api/sub_forum/:sub_forum_id/topico/:topico_id/mensagem/:id", catchApiExceptions(mensagem.api.get));
+app.post("/api/sub_forum/:sub_forum_id/topico/:topico_id/mensagem", catchApiExceptions(mensagem.api.create));
+app.delete("/api/sub_forum/:sub_forum_id/topico/:topico_id/mensagem/:id", catchApiExceptions(mensagem.api.remove));
 
 // retorna o app
 export { app };

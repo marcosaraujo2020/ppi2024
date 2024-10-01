@@ -1,11 +1,11 @@
 
 /** @typedef {{id: number, nome: string, email: string, admin: boolean}} User */
 /** @typedef {{id: number, nome: string, descricao: string}} SubForum */
-/** @typedef {{id: number, usuario_id: number, usuario_nome: string, titulo: string, created_at: string}} Thread */
+/** @typedef {{id: number, usuario_id: number, usuario_nome: string, titulo: string, created_at: string}} Topico */
 /** @typedef {{id: number, usuario_id: number, usuario_nome: string, texto: string, created_at: string}} Mensagem */
 
 /** @typedef {{nome: string, descricao: string}} NewSubForum */
-/** @typedef {{titulo: string}} NewThread */
+/** @typedef {{titulo: string}} NewTopico */
 /** @typedef {{texto: string}} NewMensagem */
 
 
@@ -48,31 +48,31 @@ const api = function () {
             /** @returns {Api<void>} */
             delete: async (id) => DELETE(`/api/sub_forum/${id}`),
         },
-        thread: {
-            /** @returns {Api<{rows: Thread[]}>} */
-            list: async (sub_forum_id) => GET(`/api/sub_forum/${sub_forum_id}/thread`),
-            /** @returns {Api<Thread>} */
-            get: async (sub_forum_id, id) => GET(`/api/sub_forum/${sub_forum_id}/thread/${id}`),
+        topico: {
+            /** @returns {Api<{rows: Topico[]}>} */
+            list: async (sub_forum_id) => GET(`/api/sub_forum/${sub_forum_id}/topico`),
+            /** @returns {Api<Topico>} */
+            get: async (sub_forum_id, id) => GET(`/api/sub_forum/${sub_forum_id}/topico/${id}`),
             /**
-             * @param {NewThread} body
-             * @returns {Api<Thread>}
+             * @param {NewTopico} body
+             * @returns {Api<Topico>}
              */
-            post: async (sub_forum_id, body) => POST(`/api/sub_forum/${sub_forum_id}/thread`, body),
+            post: async (sub_forum_id, body) => POST(`/api/sub_forum/${sub_forum_id}/topico`, body),
             /** @returns {Api<void>} */
-            delete: async (sub_forum_id, id) => DELETE(`/api/sub_forum/${sub_forum_id}/thread/${id}`),
+            delete: async (sub_forum_id, id) => DELETE(`/api/sub_forum/${sub_forum_id}/topico/${id}`),
         },
         mensagem: {
             /** @returns {Api<{rows: Mensagem[]}>} */
-            list: async (sub_forum_id, thread_id) => GET(`/api/sub_forum/${sub_forum_id}/thread/${thread_id}/mensagem`),
+            list: async (sub_forum_id, topico_id) => GET(`/api/sub_forum/${sub_forum_id}/topico/${topico_id}/mensagem`),
             /** @returns {Api<Mensagem>} */
-            get: async (sub_forum_id, thread_id, id) => GET(`/api/sub_forum/${sub_forum_id}/thread/${thread_id}/mensagem/${id}`),
+            get: async (sub_forum_id, topico_id, id) => GET(`/api/sub_forum/${sub_forum_id}/topico/${topico_id}/mensagem/${id}`),
             /**
              * @param {NewMensagem} body
              * @returns {Api<Mensagem>}
              */
-            post: async (sub_forum_id, thread_id, body) => POST(`/api/sub_forum/${sub_forum_id}/thread/${thread_id}/mensagem`, body),
+            post: async (sub_forum_id, topico_id, body) => POST(`/api/sub_forum/${sub_forum_id}/topico/${topico_id}/mensagem`, body),
             /** @returns {Api<Mensagem>} */
-            delete: async (sub_forum_id, thread_id, id) => DELETE(`/api/sub_forum/${sub_forum_id}/thread/${thread_id}/mensagem/${id}`),
+            delete: async (sub_forum_id, topico_id, id) => DELETE(`/api/sub_forum/${sub_forum_id}/topico/${topico_id}/mensagem/${id}`),
         },
     };
 

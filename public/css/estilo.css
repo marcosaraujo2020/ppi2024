@@ -261,17 +261,17 @@ form button:hover {
     font-variation-settings: "wdth" 100;
 }
 
-#link-titulo-topico {
+.link-titulo-topico {
     text-decoration: none;
     color: var(--cor4);
 }
 
-#link-titulo-topico:hover {
+.link-titulo-topico:hover {
     color: var(--cor3);
 }
   
   
-#feedback{
+.feedback{
     display: flex;
     align-items: center;
     justify-content: space-between;
