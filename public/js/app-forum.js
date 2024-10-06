@@ -3,27 +3,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var novoFormulario = document.getElementById('formulario');
     
-    var id_subforum = 1;
+    var id_subforum = 2;
    
     if (window.location.pathname.includes('sub-forum.html')) {
         var subforumId = getQueryParameter('id');
 
-        
-
         if (subforumId) {
             api.sub_forum.get(subforumId).then(response => {
                 var subforum = response.body;
-                
-
-                console.log(subforum);
 
                 var titulo_sub_forum = document.getElementById('titulo-sub-forum');
+                titulo_sub_forum.innerText = "Sub-fórum: " + subforum.nome;
                 var section_topico = document.getElementById('topico-sub-forum');
-                titulo_sub_forum.innerText = subforum.nome
 
                 api.topico.list(subforumId).then(response => {
                     var topicos = response.body;
-                   
+
                     topicos.rows.forEach(element => {
                         var post_forum_topico = document.createElement('article');
                         var ancora_topico = document.createElement('a');
@@ -60,14 +55,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
             var section = document.getElementById("teste");
             section.className = 'topico';
-                   
-            console.log(response.body.rows);
-    
+
+
             response.body.rows.forEach(subforum => {
                 var ancora = document.createElement('a');
                 var div = document.createElement('div');
                 var titulo_topico = document.createElement('h4');
                 var descricao_topico = document.createElement('p');
+                var quantidade_topicos = document.createElement('p');
                 var article = document.createElement('article');
                 var hr = document.createElement('hr');
                 var div_feedback = document.createElement('div');
@@ -76,19 +71,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 var span_icone = document.createElement('span');
                 var span_icone2 = document.createElement('span');
     
+                quantidade_topicos.className = 'quantidade-topicos';
                 div_feedback.className ='feedback';
                 div_icones.className = 'icones';
                 span_icone.className = 'material-symbols-outlined';
                 span_icone.innerText = 'visibility';
                 span_icone2.className = 'material-symbols-outlined';
                 span_icone2.innerText = 'mode_comment';
+                
+                quantidade_topicos.innerText = 2;
                 div.className = 'conteudo-forum';
                 ancora.href = 'sub-forum.html?id=' + subforum.id;
                 ancora.className = 'link-titulo-topico';
                 titulo_topico.className = 'titulo-topico';
                 descricao_topico.className = 'descricao-topico';
                 article.className = 'post-forum';
-                
+               
                 titulo_topico.innerText = subforum.nome;
                 descricao_topico.innerText = subforum.descricao;
                 
@@ -98,8 +96,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 div.appendChild(descricao_topico);
                 div_icones.appendChild(span_icone);
                 div_icones.appendChild(span_icone2);
-                div_feedback.appendChild(div_esquerda);
+                div_icones.appendChild(quantidade_topicos);
+                
                 div_feedback.appendChild(div_icones);
+                div_feedback.appendChild(div_esquerda);
                 article.appendChild(div);
                 article.appendChild(div_feedback);
                 section.appendChild(article);
@@ -114,26 +114,53 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (window.location.pathname.includes('mensagem.html')) {
         
-        var mensagemId = getQueryParameter('id');       
+        var mensagemId = getQueryParameter('id');  
     
         if (mensagemId) {
-            api.mensagem.list(id_subforum, mensagemId).then(response => {
-                var mensagem = response.body;
-                
-                mensagem.rows.forEach(element => {
-                    document.getElementById('titulo-mensagem').innerText = element.usuario_nome;
-                    document.getElementById('conteudo-mensagem').innerText = element.texto;
-                })
+
+            var section_mensagem = document.getElementById( "mensagem-topico");
+            var tema_topico = document.getElementById("tema-topico");
+            var h4 = document.createElement('h4');
+            var p = document.createElement('p');
+            p.className = "autor-topico";
+               
+
+            api.topico.get(id_subforum, mensagemId).then(response => {
+                var subforum = response.body;
     
-            }).catch(error => {
-                console.error("Erro ao obter mensagem:", error);
-                document.getElementById('titulo-mensagem').innerText = "Erro ao carregar a mensagem";
-                document.getElementById('conteudo-mensagem').innerText = "Não foi possível carregar o conteúdo da mensagem.";
+                h4.innerText = subforum.titulo;
+                p.innerText = subforum.usuario_nome + ", " + subforum.created_at;
+                tema_topico.appendChild(h4);
+                tema_topico.appendChild(p)
+
+                api.mensagem.list(id_subforum, mensagemId).then(response => {
+                    var mensagem = response.body;
+
+                    mensagem.rows.forEach(element => {
+                        var post_forum_mensagem = document.createElement('article');
+                        post_forum_mensagem.className = 'post-forum-mensagem';
+                        var conteudo_mensagem = document.createElement('p');
+                        conteudo_mensagem.id = "conteudo-mensagem";
+                        var hr = document.createElement("hr");
+
+                        conteudo_mensagem.innerText = element.texto;
+
+                        post_forum_mensagem.appendChild(conteudo_mensagem);
+                        section_mensagem.appendChild(post_forum_mensagem)
+                        section_mensagem.appendChild(hr);
+
+                    });
+        
+                }).catch(error => {
+                    console.error("Erro ao obter mensagem:", error);
+                    document.getElementById('titulo-mensagem').innerText = "Erro ao carregar a mensagem";
+                    document.getElementById('conteudo-mensagem').innerText = "Não foi possível carregar o conteúdo da mensagem.";
+                });
             });
         } else {
             document.getElementById('titulo-mensagem').innerText = "Mensagem não encontrada";
             document.getElementById('conteudo-mensagem').innerText = "O ID da mensagem não foi fornecido.";
-        }
+        } 
     }
     
 
@@ -142,7 +169,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return urlParams.get(param);    
     }
     
-   
+
+
     
 
     document.getElementById('novotopico').addEventListener('click', function(){
@@ -190,6 +218,9 @@ document.addEventListener('DOMContentLoaded', function() {
         await api.auth.logoff();
         location.reload();
     });
+
+
+
 
 
 });

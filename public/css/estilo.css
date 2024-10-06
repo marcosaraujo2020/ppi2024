@@ -238,7 +238,7 @@ form button:hover {
     margin-left: 40px;
 }
 
-.post-forum, .post-forum-topico {
+.post-forum, .post-forum-topico, .post-forum-mensagem {
     height: auto;
     margin: 20px 20px 0px 20px;
 }
@@ -306,9 +306,18 @@ form button:hover {
 
 .icones{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     width: 15vh;
+}
+
+
+.icones > span {
+    font-size: medium;
+}
+
+.icones > p {
+    font-size: 0.85rem;
 }
 
 
@@ -404,6 +413,7 @@ hr {
     color: var(--cor0);
     margin-top: 15px;   
     margin-left: 150px;
+    margin-bottom: 0px;
     width: 90vw;
 }
 
@@ -411,7 +421,7 @@ hr {
 
 
 /* Thread */
-.topico-thread  {
+.topico-mensagem  {
     background-color: aliceblue;
     height: auto;
     width: 80vw;
@@ -421,23 +431,26 @@ hr {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-.tema-thread {
+.tema-topico {
     display: flex;
-    justify-content: space-between;
-    
+    flex-direction: column;
     color: white;
     border-radius: 5px 5px 0px 0px;
     background-color: var(--cor2);
     width: 80vw;
 }
 
-.tema-thread > p {
-    margin: 10px 20px 10px 20px;
+.tema-topico > p {
+    margin: 0px 0px 10px 20px;
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;
-    font-style: normal;
+    font-style: italic;
 
+}
+
+.tema-topico > h4 {
+    margin: 10px 20px 10px 20px;
 }
 
 #titulo-thread {
