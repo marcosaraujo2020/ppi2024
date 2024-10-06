@@ -63,7 +63,7 @@ li a {
     display: flex;
     color: white;
     margin-left: 40px;
-    margin-right: 40px;
+    margin-right: 140px;
 }
 .logado .btn-nav {
     display: none;
@@ -260,6 +260,17 @@ form button:hover {
     font-size: 12px;
     font-variation-settings: "wdth" 100;
 }
+
+.autor-data-mensagem {
+    font-family: "Inconsolata", monospace;
+    font-optical-sizing: auto;
+    font-weight: 350;
+    font-style: italic;
+    font-size: 12px;
+    font-variation-settings: "wdth" 100;
+    color: var(--cor2);
+}
+
 
 .link-titulo-topico {
     text-decoration: none;

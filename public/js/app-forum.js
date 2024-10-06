@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var novoFormulario = document.getElementById('formulario');
     
-    var id_subforum = 2;
+    var id_subforum = 1;
    
     if (window.location.pathname.includes('sub-forum.html')) {
         var subforumId = getQueryParameter('id');
@@ -56,8 +56,8 @@ document.addEventListener('DOMContentLoaded', function() {
             var section = document.getElementById("teste");
             section.className = 'topico';
 
-
             response.body.rows.forEach(subforum => {
+
                 var ancora = document.createElement('a');
                 var div = document.createElement('div');
                 var titulo_topico = document.createElement('h4');
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
             api.topico.get(id_subforum, mensagemId).then(response => {
                 var subforum = response.body;
     
-                h4.innerText = subforum.titulo;
+                h4.innerText = `Tópico: ${subforum.titulo}`;
                 p.innerText = subforum.usuario_nome + ", " + subforum.created_at;
                 tema_topico.appendChild(h4);
                 tema_topico.appendChild(p)
@@ -141,11 +141,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         post_forum_mensagem.className = 'post-forum-mensagem';
                         var conteudo_mensagem = document.createElement('p');
                         conteudo_mensagem.id = "conteudo-mensagem";
+                        var autor_data_mensagem = document.createElement('p');
+                        autor_data_mensagem.className = 'autor-data-mensagem';
                         var hr = document.createElement("hr");
 
                         conteudo_mensagem.innerText = element.texto;
+                        autor_data_mensagem.innerText = `Comentado por ${element.usuario_nome},  ${element.created_at}`
 
                         post_forum_mensagem.appendChild(conteudo_mensagem);
+                        post_forum_mensagem.appendChild(autor_data_mensagem);
                         section_mensagem.appendChild(post_forum_mensagem)
                         section_mensagem.appendChild(hr);
 
