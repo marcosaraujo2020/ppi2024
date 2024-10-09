@@ -8,47 +8,54 @@ export const api = { list, get, create, remove };
 
 const validateCreateBody = validator(z.object({
     titulo: z.string().min(1),
+    sub_forum_id: z.number(),
 }));
 
-async function list(req: Request<{ sub_forum_id: string }>, res: Response) {
-    const sub_forum_id = parseId(req.params.sub_forum_id);
-    const rows = await db.query(`
+const validateListQuery = validator(z.object({
+    sub_forum_id: z.number().optional(),
+}));
+
+async function list(req: Request, res: Response) {
+    const query = validateListQuery(req.query);
+    const sql = `
         SELECT topico.id, topico.usuario_id, usuario.nome as usuario_nome, topico.titulo, topico.created_at
         FROM topico JOIN usuario ON usuario.id = topico.usuario_id
-        WHERE topico.sub_forum_id = ?
-    `, sub_forum_id);
+    `;
+    let rows;
+    if (typeof query.sub_forum_id === "number") {
+        rows = await db.query(sql + " WHERE topico.sub_forum_id = ?", query.sub_forum_id);
+    } else {
+        rows = await db.query(sql);
+    }
     return res.send({ rows });
 }
 
-async function get(req: Request<{ sub_forum_id: string, id: string }>, res: Response) {
-    const sub_forum_id = parseId(req.params.sub_forum_id);
+async function get(req: Request<{ id: string }>, res: Response) {
     const id = parseId(req.params.id);
     const row = expectFound(await db.fetch(`
         SELECT topico.id, topico.usuario_id, usuario.nome as usuario_nome, topico.titulo, topico.created_at
         FROM topico JOIN usuario ON usuario.id = topico.usuario_id
-        WHERE topico.sub_forum_id = ? AND topico.id = ?
-    `, sub_forum_id, id));
+        WHERE topico.id = ?
+    `, id));
     return res.send(row);
 }
 
-async function create(req: Request<{ sub_forum_id: string }>, res: Response) {
+async function create(req: Request, res: Response) {
     const user = await getUsuario(req);
-    const sub_forum_id = parseId(req.params.sub_forum_id);
-    expectFound(await db.fetch("SELECT id FROM sub_forum WHERE id = ?", sub_forum_id));
     const data = validateCreateBody(req.body);
-    const id = await db.execute("INSERT INTO topico(usuario_id, sub_forum_id, titulo) VALUES (?, ?, ?)", user.id, sub_forum_id, data.titulo).then(x => x.lastID);
+    expectFound(await db.fetch("SELECT id FROM sub_forum WHERE id = ?", data.sub_forum_id));
+    const id = await db.execute("INSERT INTO topico(usuario_id, sub_forum_id, titulo) VALUES (?, ?, ?)", user.id, data.sub_forum_id, data.titulo).then(x => x.lastID);
     const row = expectFound(await db.fetch(`
         SELECT topico.id, topico.usuario_id, usuario.nome as usuario_nome, topico.titulo, topico.created_at
         FROM topico JOIN usuario ON usuario.id = topico.usuario_id
-        WHERE topico.sub_forum_id = ? AND topico.id = ?
-    `, sub_forum_id, id));
+        WHERE topico.id = ?
+    `, id));
     return res.send(row);
 }
 
-async function remove(req: Request<{ sub_forum_id: string, id: string }>, res: Response) {
+async function remove(req: Request<{ id: string }>, res: Response) {
     expectAdmin(await getUsuario(req));
-    const sub_forum_id = parseId(req.params.sub_forum_id);
     const id = parseId(req.params.id);
-    expectChanges(await db.execute("DELETE FROM sub_forum WHERE sub_forum_id = ? AND id = ?", sub_forum_id, id));
+    expectChanges(await db.execute("DELETE FROM sub_forum WHERE id = ?", id));
     return res.send();
 }

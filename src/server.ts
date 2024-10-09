@@ -4,7 +4,7 @@ import * as auth from "./api/auth";
 import * as subForum from "./api/subForum";
 import * as topico from "./api/topico";
 import * as mensagem from "./api/mensagem";
-import { catchApiExceptions } from "./utils";
+import { catchApiExceptions as api } from "./utils";
 
 // cria o objeto app do express
 const app = express();
@@ -18,28 +18,28 @@ app.use(cookieMiddleware());
 // serve os arquivos na pasta public na raiz
 app.use(express.static('public'));
 
-app.get("/api/usuario", catchApiExceptions(auth.api.usuario));
+app.get("/api/usuario", api(auth.api.usuario));
 
-app.post("/api/signup", catchApiExceptions(auth.api.signup));
-app.post("/api/signoff", catchApiExceptions(auth.api.signoff));
+app.post("/api/signup", api(auth.api.signup));
+app.post("/api/signoff", api(auth.api.signoff));
 
-app.post("/api/login", catchApiExceptions(auth.api.login));
-app.delete("/api/login", catchApiExceptions(auth.api.logoff));
+app.post("/api/login", api(auth.api.login));
+app.delete("/api/login", api(auth.api.logoff));
 
-app.get("/api/sub_forum", catchApiExceptions(subForum.api.list));
-app.get("/api/sub_forum/:id", catchApiExceptions(subForum.api.get));
-app.post("/api/sub_forum", catchApiExceptions(subForum.api.create));
-app.delete("/api/sub_forum/:id", catchApiExceptions(subForum.api.remove));
+app.get("/api/sub_forum", api(subForum.api.list));
+app.get("/api/sub_forum/:id", api(subForum.api.get));
+app.post("/api/sub_forum", api(subForum.api.create));
+app.delete("/api/sub_forum/:id", api(subForum.api.remove));
 
-app.get("/api/sub_forum/:sub_forum_id/topico", catchApiExceptions(topico.api.list));
-app.get("/api/sub_forum/:sub_forum_id/topico/:id", catchApiExceptions(topico.api.get));
-app.post("/api/sub_forum/:sub_forum_id/topico", catchApiExceptions(topico.api.create));
-app.delete("/api/sub_forum/:sub_forum_id/topico/:id", catchApiExceptions(topico.api.remove));
+app.get("/api/topico", api(topico.api.list));
+app.get("/api/topico/:id", api(topico.api.get));
+app.post("/api/topico", api(topico.api.create));
+app.delete("/api/topico/:id", api(topico.api.remove));
 
-app.get("/api/sub_forum/:sub_forum_id/topico/:topico_id/mensagem", catchApiExceptions(mensagem.api.list));
-app.get("/api/sub_forum/:sub_forum_id/topico/:topico_id/mensagem/:id", catchApiExceptions(mensagem.api.get));
-app.post("/api/sub_forum/:sub_forum_id/topico/:topico_id/mensagem", catchApiExceptions(mensagem.api.create));
-app.delete("/api/sub_forum/:sub_forum_id/topico/:topico_id/mensagem/:id", catchApiExceptions(mensagem.api.remove));
+app.get("/api/mensagem", api(mensagem.api.list));
+app.get("/api/mensagem/:id", api(mensagem.api.get));
+app.post("/api/mensagem", api(mensagem.api.create));
+app.delete("/api/mensagem/:id", api(mensagem.api.remove));
 
 // retorna o app
 export { app };
