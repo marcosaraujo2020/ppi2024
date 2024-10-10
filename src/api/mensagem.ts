@@ -12,8 +12,8 @@ const validateCreateBody = validator(z.object({
 }));
 
 const validateListQuery = validator(z.object({
-    sub_forum_id: z.number().optional(),
-    topico_id: z.number().optional(),
+    sub_forum_id: z.string().optional(),
+    topico_id: z.string().optional(),
 }));
 
 async function list(req: Request, res: Response) {
@@ -23,12 +23,12 @@ async function list(req: Request, res: Response) {
         FROM mensagem JOIN usuario ON usuario.id = mensagem.usuario_id
     `;
     let rows;
-    if (typeof query.sub_forum_id === "number" && typeof query.topico_id === "number") {
-        rows = await db.query(sql + " WHERE mensagem.sub_forum_id = ? AND mensagem.topico_id = ?", query.sub_forum_id, query.topico_id);
-    } else if (typeof query.sub_forum_id === "number") {
-        rows = await db.query(sql + " WHERE mensagem.sub_forum_id = ?", query.sub_forum_id);
-    } else if (typeof query.topico_id === "number") {
-        rows = await db.query(sql + " WHERE mensagem.topico_id = ?", query.topico_id);
+    if (typeof query.sub_forum_id === "string" && typeof query.topico_id === "string") {
+        rows = await db.query(sql + " WHERE mensagem.sub_forum_id = ? AND mensagem.topico_id = ?", Number(query.sub_forum_id), Number(query.topico_id));
+    } else if (typeof query.sub_forum_id === "string") {
+        rows = await db.query(sql + " WHERE mensagem.sub_forum_id = ?", Number(query.sub_forum_id));
+    } else if (typeof query.topico_id === "string") {
+        rows = await db.query(sql + " WHERE mensagem.topico_id = ?", Number(query.topico_id));
     } else {
         rows = await db.query(sql);
     }
