@@ -12,7 +12,7 @@ const validateCreateBody = validator(z.object({
 }));
 
 const validateListQuery = validator(z.object({
-    sub_forum_id: z.number().optional(),
+    sub_forum_id: z.string().optional(),
 }));
 
 async function list(req: Request, res: Response) {
@@ -22,8 +22,8 @@ async function list(req: Request, res: Response) {
         FROM topico JOIN usuario ON usuario.id = topico.usuario_id
     `;
     let rows;
-    if (typeof query.sub_forum_id === "number") {
-        rows = await db.query(sql + " WHERE topico.sub_forum_id = ?", query.sub_forum_id);
+    if (typeof query.sub_forum_id === "string") {
+        rows = await db.query(sql + " WHERE topico.sub_forum_id = ?", Number(query.sub_forum_id));
     } else {
         rows = await db.query(sql);
     }
