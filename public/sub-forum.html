@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sub-Fórum</title>
+   
     <link rel="stylesheet" href="css/estilo.css">
     <link rel="shortcut icon" href="imagens/bate-papo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />   
@@ -16,12 +17,14 @@
     <header class="cabecalho">
         
         <div class="titulo">
-            <img src="imagens/forum_17520275.png" id="logo" alt="logo">
-            <h1>Fórum do Dev | </h1>
+
+            <a href="forum.html">
+                <img src="imagens/forum_17520275.png" id="logo" alt="logo">
+                <h1>Fórum do Dev | </h1>
+            </a>
+
             <nav class="navbar">
                 <ul>
-                    <li><a href="forum.html"><span class="material-symbols-outlined" data-toggle="tooltip" title="Início">home</span></a></li>
-                    <li><a href="forum.html"><span class="material-symbols-outlined" data-toggle="tooltip" title="Novo fórum" id="novotopico">post_add</span></a></li>
                     <li><a href=""><span class="material-symbols-outlined"data-toggle="tooltip" title="Pesquisar">search</span></a></li>
                     <li>
                         <input type="text" name="temas" id="list-search">
@@ -48,7 +51,23 @@
         <h3 id="titulo-sub-forum"></h3>
                
         <section id="topico-sub-forum">
-            <div class="tema-sub-forum"><h4>Tópicos</h4></div>
+            <div class="tema-sub-forum">
+                <h4>Tópicos</h4>
+                <a href="#"><span class="material-symbols-outlined" data-toggle="tooltip" title="Novo tópico" id="novotopico">post_add</span></a>
+            </div>
+
+            <div id="formulario" class="oculto">
+                <div class="formulario-topico">
+                    <form action="" method="post" id="novoTopicoForm">
+                        <div>
+                            <textarea name="comentario-topico" id="comentario-topico" class="comentario-topico"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" id="btn-enviar-comentario">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
         </section>
 
