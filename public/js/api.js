@@ -73,6 +73,7 @@ const api = function () {
             /** @returns {Api<Mensagem>} */
             delete: async (id) => DELETE(`/api/mensagem/${id}`),
         },
+        busca: async (texto) => GET(`/api/busca?q=${encodeURIComponent(texto)}`),
     };
 
     /**

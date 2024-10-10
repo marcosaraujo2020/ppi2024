@@ -5,6 +5,7 @@ import * as subForum from "./api/subForum";
 import * as topico from "./api/topico";
 import * as mensagem from "./api/mensagem";
 import { catchApiExceptions as api } from "./utils";
+import { busca } from "./api/busca";
 
 // cria o objeto app do express
 const app = express();
@@ -40,6 +41,8 @@ app.get("/api/mensagem", api(mensagem.api.list));
 app.get("/api/mensagem/:id", api(mensagem.api.get));
 app.post("/api/mensagem", api(mensagem.api.create));
 app.delete("/api/mensagem/:id", api(mensagem.api.remove));
+
+app.get("/api/busca", api(busca));
 
 // retorna o app
 export { app };
