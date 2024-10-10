@@ -15,12 +15,14 @@
     <header class="cabecalho">
         
         <div class="titulo">
-            <img src="imagens/forum_17520275.png" id="logo" alt="logo">
-            <h1>Fórum do Dev | </h1>
+           
+            <a href="forum.html">
+                <img src="imagens/forum_17520275.png" id="logo" alt="logo">
+                <h1>Fórum do Dev | </h1>
+            </a>
+
             <nav class="navbar">
                 <ul>
-                    <li><a href="forum.html"><span class="material-symbols-outlined" data-toggle="tooltip" title="Início">home</span></a></li>
-                    <li><a href="forum.html"><span class="material-symbols-outlined" data-toggle="tooltip" title="Novo fórum" id="novotopico">post_add</span></a></li>
                     <li><a href=""><span class="material-symbols-outlined"data-toggle="tooltip" title="Pesquisar">search</span></a></li>
                     <li>  
                         <input type="text" name="temas" id="list-search">
@@ -35,7 +37,7 @@
             </nav>
         </div>
 
-        <div class="icon-user">
+        <div class="icon-user-mensagem">
             <span class="material-symbols-outlined" id="icon-user" data-toggle="tooltip" title="Usuário">account_circle</span>
             <p id="user-name">User</p>
         </div>
@@ -49,6 +51,20 @@
         <section id="mensagem-topico" class="topico-mensagem">
             
             <div id="tema-topico" class="tema-topico"></div>
+
+            <div id="formulario-comentario" class="oculto">
+                <div class="formulario-comentario-topico">
+                    <form action="" method="post" id="novoComentarioForm">
+                        <div>
+                            <textarea name="comentario-topico" id="comentario-topico" class="comentario-topico" required></textarea>
+                        </div>
+                        <div class="botoes">
+                            <button id="btn-cancelar">Cancelar</button>
+                            <button type="submit" id="btn-enviar-comentario">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
                        
         </section>
     </main>

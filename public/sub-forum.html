@@ -39,11 +39,11 @@
             </nav>
         </div>
 
-        <div class="icon-user">
+        <div class="icon-user-topico">
             <span class="material-symbols-outlined" id="icon-user" data-toggle="tooltip" title="Usuário">account_circle</span>
             <p id="user-name">User</p>
         </div>
-        
+
     </header>
 
     <main class="principal">
@@ -60,10 +60,11 @@
                 <div class="formulario-topico">
                     <form action="" method="post" id="novoTopicoForm">
                         <div>
-                            <textarea name="comentario-topico" id="comentario-topico" class="comentario-topico"></textarea>
+                            <textarea name="comentario-topico" id="comentario-topico" class="comentario-topico" required></textarea>
                         </div>
-                        <div>
-                            <button type="submit" id="btn-enviar-comentario">Enviar</button>
+                        <div class="botoes">
+                            <button id="btn-cancelar">Cancelar</button>
+                            <button type="submit" id="btn-enviar-topico">Enviar</button>
                         </div>
                     </form>
                 </div>

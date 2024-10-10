@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     var novoFormulario = document.getElementById('formulario');
+    var novoFormularioComentario = document.getElementById('formulario-comentario');
     
    // var id_subforum = 1;
 
@@ -11,10 +12,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
    
-    function criarElemento(tipo, classe, texto = '') {
+    function criarElemento(tipo, classe, texto = '', id) {
         const elemento = document.createElement(tipo);
         if (classe) elemento.className = classe;
         if (texto) elemento.innerText = texto;
+        if (id) elemento.id = id;
         return elemento;
     }
     
@@ -24,14 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
 
-    if (window.location.pathname.includes('sub-forum.html')) {
-        const subforumId = getQueryParameter('id');
-        if (subforumId) {
-            carregarSubforum(subforumId);
-        }
-    } else {
-        listarSubforuns();
-    }
+
 
     async function carregarSubforum(subforumId) {
         try {
@@ -39,18 +34,46 @@ document.addEventListener('DOMContentLoaded', function() {
             const subforum = response.body;
             document.getElementById('titulo-sub-forum').innerText = "Sub-fórum: " + subforum.nome;
 
-            document.getElementById('novotopico').addEventListener('click', function(){
-                novoFormulario.classList.remove('oculto');
-                criarTopico(subforum.id)
+            document.getElementById('novotopico').addEventListener('click', async function(){
+                const response = await api.auth.user();
+                if (response.body){
+                    novoFormulario.classList.remove('oculto');
+                    criarTopico(subforum.id)
+                } else {
+                    alert("Faça seu login ou cadastre-se.")
+                }
+                
             });
-    
-            const section_topico = document.getElementById('topico-sub-forum');
-            const topicosResponse = await api.topico.list(Number(subforum.id));
+        
+            console.log("ID do Sub-forum: " + subforumId)
 
-            const topicos = topicosResponse.body.rows;
+            const section_topico = document.getElementById('topico-sub-forum');
+            const topicosResponse = await api.topico.list(subforum.id);
+           /*  const topicos = topicosResponse.body.rows;
+
+            console.log(topicosResponse.) */
+            
+           /*  const post_forum_topico = criarElemento('article', 'post-forum-topico');
+            const ancora_topico = criarElemento('a');
+            const descricao_topico2 = criarElemento('p', '', topicosResponse.body.titulo);
+            const autor_post = criarElemento('p', '', topicosResponse.body.usuario_nome);
+            const data_post = criarElemento('p', '', `, ${topicosResponse.body.created_at}`);
+            const hr = criarElemento('hr');
+            const autor_data = criarElemento('div', 'autor-data');
+
+            ancora_topico.href = "mensagem.html?id=" + topicosResponse.body.id;
+            ancora_topico.appendChild(descricao_topico2);
+            autor_data.appendChild(autor_post);
+            autor_data.appendChild(data_post);
+            post_forum_topico.appendChild(ancora_topico);
+            post_forum_topico.appendChild(autor_data);
+            section_topico.appendChild(post_forum_topico);
+            section_topico.appendChild(hr); */
+
+            
 
                             
-            topicos.forEach(element => {
+            topicosResponse.body.rows.forEach(element => {
                 const post_forum_topico = criarElemento('article', 'post-forum-topico');
                 const ancora_topico = criarElemento('a');
                 const descricao_topico2 = criarElemento('p', '', element.titulo);
@@ -114,23 +137,55 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error("Erro ao obter lista de subfóruns:", error);
         }
     }
+
     
-    
+    if (window.location.pathname.includes('sub-forum.html')) {
+        const subforumId = getQueryParameter('id');
+        if (subforumId) {
+            carregarSubforum(subforumId);
+        }
+    } else {
+        listarSubforuns();
+    }
+
+
 
     async function carregarMensagensTopico(mensagemId) {
         try {
+
             const section_mensagem = document.getElementById("mensagem-topico");
             const tema_topico = document.getElementById("tema-topico");
     
-            // Para carregar informações do tópico
             const topicoResponse = await api.topico.get(mensagemId);
             const topico = topicoResponse.body;
-    
+            
+            const div_esquerda = criarElemento('div');
+            const div_direita = criarElemento('div');
             const h4 = criarElemento('h4', '', `Tópico: ${topico.titulo}`);
             const p = criarElemento('p', 'autor-topico', `${topico.usuario_nome}, ${topico.created_at}`);
+            const a = criarElemento('a');
+            const span = criarElemento('span', 'material-symbols-outlined', 'post_add','nova-mensagem')
             
-            tema_topico.appendChild(h4);
-            tema_topico.appendChild(p);
+            a.href = '#';
+            span.title = "Novo comentário";
+            a.appendChild(span);
+            div_esquerda.appendChild(h4);
+            div_esquerda.appendChild(p);
+            div_direita.appendChild(a);
+            tema_topico.appendChild(div_esquerda);
+            tema_topico.appendChild(div_direita);
+
+            document.getElementById('nova-mensagem').addEventListener('click', async function(){
+                
+                const response = await api.auth.user();
+                if (response.body){
+                    novoFormularioComentario.classList.remove('oculto');
+                    criarComentario(topico.id)
+                } else {
+                    alert("Faça seu login ou cadastre-se.")
+                }
+                
+            });
     
             const mensagemResponse = await api.mensagem.list(mensagemId);
             const mensagens = mensagemResponse.body.rows;
@@ -165,13 +220,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
 
-
     
     async function criarTopico(idSubforum) {
 
         document.getElementById('novoTopicoForm').addEventListener("submit", async function (event) {
             event.preventDefault();
-        
+            
             const titulo_topico = document.getElementById('comentario-topico').value.trim();
         
             const novoPost = {
@@ -202,8 +256,51 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
+    /* async function criarComentario(idSubforum) {
 
+        document.getElementById('novoTopicoForm').addEventListener("submit", async function (event) {
+            event.preventDefault();
+            
+            const titulo_topico = document.getElementById('comentario-topico').value.trim();
+        
+            const novoPost = {
+                sub_forum_id:idSubforum, 
+                titulo: titulo_topico
+            };
+        
+            try {
+                const resultado = await api.topico.post(novoPost);
+                
+                if (resultado.status === 200) {
+                    alert('Tópico criado com sucesso!');
+                    document.getElementById('novaPostagemForm').reset();
+                } else {
+                    console.error('Erro ao criar o post:', resultado);
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+            }
     
+            setTimeout(function() {
+                novoFormulario.classList.add('oculto');
+            }, 2000);
+    
+            location.reload();
+        });
+    
+    }
+ */
+
+/*     async function deletarTopico(idTopico) {
+        try {
+            await api.topico.delete(idTopico);
+            alert("Tópico deletado com sucesso!");
+            console.log(`Tópico com ID ${idTopico} deletado com sucesso.`);
+        } catch (error) {
+            console.error(`Erro ao deletar o tópico com ID ${idTopico}:`, error);
+        }
+    } */
+       
 
 
     api.auth.user().then(x => {

@@ -229,6 +229,14 @@ form button:hover {
     cursor: pointer;
 }
 
+
+.botoes {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+
 .topico, #topico-sub-forum {
     background-color: aliceblue;
     height: auto;
@@ -243,6 +251,7 @@ form button:hover {
     flex-direction: column;
     align-items: center;
 }
+
 
 .tema{
     display: flex;
@@ -355,16 +364,20 @@ form button:hover {
     color: white;
 }
 
-.icon-user {
+.icon-user, .icon-user-topico, .icon-user-mensagem {
     text-align: center;
     padding: 3px;
     border-radius: 5px;
 }
 
-.icon-user > p{
+.icon-user > p, .icon-user-topico > p, .icon-user-mensagem > p {
     color: white;
     font-family: monospace;
     margin: 0%;
+}
+
+.icon-user-topico, .icon-user-mensagem {
+    margin-right: 150px;
 }
 
 #icon-logout{
@@ -410,7 +423,7 @@ hr {
 }
 
 
-#btn-enviar-comentario {
+#btn-enviar-topico {
     display: flex;
     align-items: center;
     border-color: var(--cor0); 
@@ -425,7 +438,7 @@ hr {
     margin: 10px;
 }
 
-#btn-enviar-comentario:hover {
+#btn-enviar-topico:hover {
     cursor: pointer;
     background-color: var(--cor2);
 }
@@ -507,12 +520,28 @@ hr {
 
 .tema-topico {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     color: white;
     border-radius: 5px 5px 0px 0px;
     background-color: var(--cor2);
     width: 80vw;
 }
+
+.tema-topico > div {
+    margin-left: 20px;
+    margin-right: 50px;
+}
+
+
+.tema-topico > div > a {
+   
+    text-decoration: none;
+    color: var(--cor0);
+   
+}
+
+
 
 .tema-topico > p {
     margin: 0px 0px 10px 20px;
@@ -555,4 +584,11 @@ hr {
 #btn-adicionar-comentario:hover{
     background-color: var(--cor2);
     cursor: pointer;
+}
+
+
+#mensagem-topico {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
