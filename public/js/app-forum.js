@@ -1,11 +1,15 @@
 
+function id(id) {
+    const elem = document.getElementById(id);
+    if (elem === null) throw new Error(`id ${id} não existe`);
+    return elem;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
 
     var novoFormulario = document.getElementById('formulario');
     var novoFormularioComentario = document.getElementById('formulario-comentario');
     
-   // var id_subforum = 1;
-
     function getQueryParameter(param) {
         var urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param);    
@@ -26,12 +30,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
 
-
-
     async function carregarSubforum(subforumId) {
         try {
             const response = await api.sub_forum.get(subforumId);
             const subforum = response.body;
+
             document.getElementById('titulo-sub-forum').innerText = "Sub-fórum: " + subforum.nome;
 
             document.getElementById('novotopico').addEventListener('click', async function(){
@@ -45,34 +48,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 
             });
         
-            console.log("ID do Sub-forum: " + subforumId)
 
             const section_topico = document.getElementById('topico-sub-forum');
-            const topicosResponse = await api.topico.list(subforum.id);
-           /*  const topicos = topicosResponse.body.rows;
+            const topicosResponse = await api.topico.list(subforum.id);         
 
-            console.log(topicosResponse.) */
-            
-           /*  const post_forum_topico = criarElemento('article', 'post-forum-topico');
-            const ancora_topico = criarElemento('a');
-            const descricao_topico2 = criarElemento('p', '', topicosResponse.body.titulo);
-            const autor_post = criarElemento('p', '', topicosResponse.body.usuario_nome);
-            const data_post = criarElemento('p', '', `, ${topicosResponse.body.created_at}`);
-            const hr = criarElemento('hr');
-            const autor_data = criarElemento('div', 'autor-data');
-
-            ancora_topico.href = "mensagem.html?id=" + topicosResponse.body.id;
-            ancora_topico.appendChild(descricao_topico2);
-            autor_data.appendChild(autor_post);
-            autor_data.appendChild(data_post);
-            post_forum_topico.appendChild(ancora_topico);
-            post_forum_topico.appendChild(autor_data);
-            section_topico.appendChild(post_forum_topico);
-            section_topico.appendChild(hr); */
-
-            
-
-                            
             topicosResponse.body.rows.forEach(element => {
                 const post_forum_topico = criarElemento('article', 'post-forum-topico');
                 const ancora_topico = criarElemento('a');
@@ -103,35 +82,38 @@ document.addEventListener('DOMContentLoaded', function() {
             section.className = 'topico';
     
             response.body.rows.forEach(subforum => {
-                const ancora = criarElemento('a', 'link-titulo-topico');
-                ancora.href = 'sub-forum.html?id=' + subforum.id;
-    
-                const titulo_topico = criarElemento('h4', 'titulo-topico', subforum.nome);
-                const descricao_topico = criarElemento('p', 'descricao-topico', subforum.descricao);
-    
-                const quantidade_topicos = criarElemento('p', 'quantidade-topicos', '2');
-               // const span_icone = criarElemento('span', 'material-symbols-outlined', 'visibility');
-                const span_icone2 = criarElemento('span', 'material-symbols-outlined', 'mode_comment');
-    
-                const div = criarElemento('div', 'conteudo-forum');
-                ancora.appendChild(titulo_topico);
-                div.appendChild(ancora);
-                div.appendChild(descricao_topico);
-    
-                const div_icones = criarElemento('div', 'icones');
-               // div_icones.appendChild(span_icone);
-                div_icones.appendChild(span_icone2);
-                div_icones.appendChild(quantidade_topicos);
-    
-                const div_feedback = criarElemento('div', 'feedback');
-                div_feedback.appendChild(div_icones);
-    
-                const article = criarElemento('article', 'post-forum');
-                article.appendChild(div);
-                article.appendChild(div_feedback);
-    
-                section.appendChild(article);
-                section.appendChild(criarElemento('hr'));
+
+                api.topico.list(subforum.id).then(element=>{
+                    const valor = element.body.rows.length
+               
+                    const ancora = criarElemento('a', 'link-titulo-topico');
+                    ancora.href = 'sub-forum.html?id=' + subforum.id;
+        
+                    const titulo_topico = criarElemento('h4', 'titulo-topico', subforum.nome);
+                    const descricao_topico = criarElemento('p', 'descricao-topico', subforum.descricao);
+        
+                    const quantidade_topicos = criarElemento('p', 'quantidade-topicos', `${valor}`);
+                    const span_icone2 = criarElemento('span', 'material-symbols-outlined', 'mode_comment');
+        
+                    const div = criarElemento('div', 'conteudo-forum');
+                    ancora.appendChild(titulo_topico);
+                    div.appendChild(ancora);
+                    div.appendChild(descricao_topico);
+        
+                    const div_icones = criarElemento('div', 'icones');
+                    div_icones.appendChild(span_icone2);
+                    div_icones.appendChild(quantidade_topicos);
+        
+                    const div_feedback = criarElemento('div', 'feedback');
+                    div_feedback.appendChild(div_icones);
+        
+                    const article = criarElemento('article', 'post-forum');
+                    article.appendChild(div);
+                    article.appendChild(div_feedback);
+        
+                    section.appendChild(article);
+                    section.appendChild(criarElemento('hr'));
+                });
             });
         } catch (error) {
             console.error("Erro ao obter lista de subfóruns:", error);
@@ -144,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (subforumId) {
             carregarSubforum(subforumId);
         }
-    } else {
+    } else if (window.location.pathname.includes('forum.html')) {
         listarSubforuns();
     }
 
@@ -159,7 +141,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const topicoResponse = await api.topico.get(mensagemId);
             const topico = topicoResponse.body;
             
-            const div_esquerda = criarElemento('div');
+            const h4 = criarElemento('h4', '', `Tópico: ${topico.titulo}`);
+            const p = criarElemento('p', 'autor-topico', `${topico.usuario_nome}, ${topico.created_at}`);
+
+            tema_topico.appendChild(h4)
+            tema_topico.appendChild(p)
+           
+
+           /*  const div_esquerda = criarElemento('div');
             const div_direita = criarElemento('div');
             const h4 = criarElemento('h4', '', `Tópico: ${topico.titulo}`);
             const p = criarElemento('p', 'autor-topico', `${topico.usuario_nome}, ${topico.created_at}`);
@@ -173,9 +162,9 @@ document.addEventListener('DOMContentLoaded', function() {
             div_esquerda.appendChild(p);
             div_direita.appendChild(a);
             tema_topico.appendChild(div_esquerda);
-            tema_topico.appendChild(div_direita);
+            tema_topico.appendChild(div_direita); */
 
-            document.getElementById('nova-mensagem').addEventListener('click', async function(){
+            /*document.getElementById('nova-mensagem').addEventListener('click', async function(){
                 
                 const response = await api.auth.user();
                 if (response.body){
@@ -185,14 +174,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     alert("Faça seu login ou cadastre-se.")
                 }
                 
-            });
+            });*/
     
-            const mensagemResponse = await api.mensagem.list(mensagemId);
+            const mensagemResponse = await api.mensagem.list(topico.id);
             const mensagens = mensagemResponse.body.rows;
     
             mensagens.forEach(element => {
                 const post_forum_mensagem = criarElemento('article', 'post-forum-mensagem');
-                const conteudo_mensagem = criarElemento('p', '', element.texto);
+                const conteudo_mensagem = criarElemento('p', '', element.texto, 'conteudo-mensagem');
                 const autor_data_mensagem = criarElemento('p', 'autor-data-mensagem', `Comentado por ${element.usuario_nome}, ${element.created_at}`);
                 const hr = criarElemento('hr');
     
@@ -238,6 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 if (resultado.status === 200) {
                     alert('Tópico criado com sucesso!');
+                    
                     document.getElementById('novaPostagemForm').reset();
                 } else {
                     console.error('Erro ao criar o post:', resultado);
