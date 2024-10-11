@@ -2,15 +2,25 @@
 
 Um fórum para a discussão de tudo relacionado a desenvolvimento de software
 
-## Instalando
+Este fórum contém quatro entidades, usuário, sub-forums, tópicos e mensagens
+
+Os sub-forums englobam um domínio na programação como linux ou javascript,
+eles tem vários tópicos que são conversas dentro daquele domínio como uma dúvida,
+e cada tópico contém várias mensagens
+
+Os usuários podem se cadastrar e logar, sessões são rastreadas com cookies e cada usuário pode ter apenas uma sessão por vez
+
+## Instalação
 
 execute `npm install` para baixar os pacotes
 
-execute `npm run reset` para criar o banco
+execute `npm run reset` para criar o banco com dados de teste
+
+## Execução
 
 execute `npm start` para rodar o servidor
 
-depois destas etapas, basta rodar `npm start` de novo
+também é possível rodar `npm run watch` para rodar o servidor e automaticamente reiniciar quando você salvar mudanças no código
 
 ## Debugar
 
@@ -24,22 +34,26 @@ você também pode debugar os testes, vá na aba de debug do vscode (Ctrl+Shift+
 
 você pode executar os testes com `npm test`, os testes estão em `scripts/test.ts`
 
-## Visão geral (pasta src)
+## Visão geral
 
-`main.ts` - arquivo principal, puxa o `server.ts` e roda o servidor
+`src/main.ts` - arquivo principal, puxa as apis da pasta `api/`, configura e roda o servidor
 
-`server.ts` - configura o app do express, puxa as apis dos arquivos na pasta `api/`
+`src/config.ts` - onde as constantes do servidor são guardadas
 
-`database.ts` - acesso ao banco de dados, é conectado no primeiro uso, e expõe o banco com funções globais
+`src/database.ts` - acesso ao banco de dados, conecta sozinho no primeiro uso, e expõe o banco com as funções `query`, `fetch` e `execute`
 
-`config.ts` - porta tcp e caminho do banco de dados
+`src/config.ts` - porta tcp e caminho do banco de dados
 
-`utils.ts` - funções avulsas
+`src/utils.ts` - funções avulsas
 
-`api/subForum.ts` - apis rest que servem os sub-forums
+`src/api/auth.ts` - apis que gerenciam as sessões dos usuarios
 
-## Visão geral (pasta scripts)
+`src/api/subForum.ts` - apis rest que servem os sub-forums
 
-`scripts/reset.ts` - executado com `npm run reset`, apaga e recria o banco, aqui se encontra a estrutura do banco
+`src/api/topicos.ts` - apis rest que servem os tópicos
 
-`scripts/test.ts` - executado com `npm test`, também apaga e recria o banco, roda um servidor local e faz vários testes
+`src/api/mensagem.ts` - apis rest que servem os mensagem
+
+`src/api/busca.ts` - api que faz busca por termos nas mensagens
+
+`scripts/reset.ts` - executado com `npm run reset`, apaga e recria o banco, aqui se encontra os comandos que criam a estrutura do banco
