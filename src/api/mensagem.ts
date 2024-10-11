@@ -37,7 +37,7 @@ export async function list(req: Request, res: Response) {
     }
     if (query.topico_id) {
         // adiciona filtro por tópico se especificado
-        sql += " AND topico.topico_id = ?";
+        sql += " AND mensagem.topico_id = ?";
         params.push(parseId(query.topico_id));
     }
 
