@@ -132,13 +132,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    async function carregarMensagensTopico(mensagemId) {
+    async function carregarMensagensTopico(topicoId) {
         try {
 
-            const section_mensagem = document.getElementById("mensagem-topico");
             const tema_topico = document.getElementById("tema-topico");
     
-            const topicoResponse = await api.topico.get(mensagemId);
+            const topicoResponse = await api.topico.get(topicoId);
             const topico = topicoResponse.body;
             
             const h4 = criarElemento('h4', '', `Tópico: ${topico.titulo}`);
@@ -147,6 +146,17 @@ document.addEventListener('DOMContentLoaded', function() {
             tema_topico.appendChild(h4)
             tema_topico.appendChild(p)
            
+            document.getElementById("novoComentarioForm").addEventListener("submit", (ev) => {
+                ev.preventDefault();
+                const texto = document.getElementById("comentario-topico").value.trim();
+                api.mensagem.post({
+                    texto, topico_id: topico.id
+                }).then((response) => {
+                    if (response.status == 200) {
+                        document.location.reload();
+                    }
+                })
+            });
 
            /*  const div_esquerda = criarElemento('div');
             const div_direita = criarElemento('div');
@@ -187,8 +197,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
                 post_forum_mensagem.appendChild(conteudo_mensagem);
                 post_forum_mensagem.appendChild(autor_data_mensagem);
-                section_mensagem.appendChild(post_forum_mensagem);
-                section_mensagem.appendChild(hr);
+                novoFormularioComentario.before(post_forum_mensagem);
+                novoFormularioComentario.before(hr);
             });
         } catch (error) {
             console.error("Erro ao obter mensagem:", error);
