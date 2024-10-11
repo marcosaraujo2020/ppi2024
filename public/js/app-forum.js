@@ -36,21 +36,27 @@ document.addEventListener('DOMContentLoaded', function() {
             const subforum = response.body;
 
             document.getElementById('titulo-sub-forum').innerText = "Sub-fórum: " + subforum.nome;
-
-            document.getElementById('novotopico').addEventListener('click', async function(){
-                const response = await api.auth.user();
-                if (response.body){
-                    novoFormulario.classList.remove('oculto');
-                    criarTopico(subforum.id)
-                } else {
-                    alert("Faça seu login ou cadastre-se.")
-                }
-                
-            });
         
 
             const section_topico = document.getElementById('topico-sub-forum');
             const topicosResponse = await api.topico.list(subforum.id);         
+
+            document.getElementById("novoTopicoForm").addEventListener("submit", (ev) => {
+                ev.preventDefault();
+                const titulo = document.getElementById("titulo-topico").value.trim();
+                const texto = document.getElementById("comentario-topico").value.trim();
+                async function criaTopicoAsync() {
+                    const topico = await api.topico.post({
+                        titulo,
+                        sub_forum_id: subforum.id,
+                    });
+                    await api.mensagem.post({
+                        texto, topico_id: topico.body.id
+                    });
+                    document.location = "/mensagem.html?id=" + topico.body.id;
+                }
+                criaTopicoAsync();
+            });
 
             topicosResponse.body.rows.forEach(element => {
                 const post_forum_topico = criarElemento('article', 'post-forum-topico');

@@ -57,17 +57,25 @@
         <section id="topico-sub-forum">
             <div class="tema-sub-forum">
                 <h4>Tópicos</h4>
-                <a href="#"><span class="material-symbols-outlined" data-toggle="tooltip" title="Novo tópico" id="novotopico">post_add</span></a>
             </div>
+        </section>
 
-            <div id="formulario" class="oculto">
+        <section id="novo-topico">
+            <div class="tema-sub-forum">
+                <h4>Novo Tópico</h4>
+            </div>
+            <div id="formulario">
                 <div class="formulario-topico">
                     <form action="" method="post" id="novoTopicoForm">
                         <div>
+                            <label for="titulo-topico">Título</label>
+                            <input name="titulo-topico" id="titulo-topico" class="titulo-topico" required></input>
+                        </div>
+                        <div>
+                            <label for="comentario-topico">Primeiro comentário</label>
                             <textarea name="comentario-topico" id="comentario-topico" class="comentario-topico" required></textarea>
                         </div>
                         <div class="botoes">
-                            <button id="btn-cancelar">Cancelar</button>
                             <button type="submit" id="btn-enviar-topico">Enviar</button>
                         </div>
                     </form>
