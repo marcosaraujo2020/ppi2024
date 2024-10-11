@@ -71,8 +71,5 @@ async function populate() {
     `);
 }
 
-/** apaga o banco, então cria as tabela, então popula as tabelas
- *
- * nós exportamos a promessa para que o teste possa saber quando o reset terminou
- */
-export const reset_promise = db.deleteDatabase().then(create).then(populate);
+// apaga o banco, então cria as tabela, então popula as tabelas
+db.deleteDatabase().then(create).then(populate);

@@ -11,27 +11,21 @@
 const api = function () {
     return {
         auth: {
-            /**
-             * @returns {Api<User>}
-             */
+            /** @returns {Api<User>} */
             user: async () => GET("/api/usuario"),
             /**
              * @param {{nome: string, email: string, senha: string}} body 
              * @returns {Api<User>}
              */
             signup: async (body) => POST("/api/signup", body),
-            /**
-             * @returns {Api<void>}
-             */
+            /** @returns {Api<void>} */
             signoff: async () => POST("/api/signoff"),
             /**
              * @param {{email: string, senha: string}} body 
              * @returns {Api<User>}
              */
             login: async (body) => POST("/api/login", body),
-            /**
-             * @returns {Api<User>}
-             */
+            /** @returns {Api<User>} */
             logoff: async () => DELETE("/api/login"),
         },
         sub_forum: {
@@ -70,7 +64,7 @@ const api = function () {
              * @returns {Api<Mensagem>}
              */
             post: async (body) => POST(`/api/mensagem`, body),
-            /** @returns {Api<Mensagem>} */
+            /** @returns {Api<void>} */
             delete: async (id) => DELETE(`/api/mensagem/${id}`),
         },
         busca: async (texto) => GET(`/api/busca?q=${encodeURIComponent(texto)}`),

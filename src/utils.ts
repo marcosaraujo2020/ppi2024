@@ -39,7 +39,7 @@ export function catchApiExceptions<T>(api: (req: Request<T>, res: Response, next
                 if (e.body === undefined) {
                     res.status(e.status).send();
                 } else {
-                    res.status(e.status).send(e.body);
+                    res.status(e.status).json(e.body);
                 }
             } else {
                 console.log(e);
@@ -57,9 +57,9 @@ export function expectFound<T>(value: T): T & {} {
     return value;
 }
 
-/** dá um 404 se changes for zero */
-export function expectChanges(value: {lastID: number, changes: number}): void {
-    if (!value.changes) {
+/** dá um 404 se changes for zero, ou seja quando nada for alterado no banco porque não foi encontrado */
+export function expectChanges(value: { changes: number }): void {
+    if (value.changes == 0) {
         throw new StatusException(NOT_FOUND);
     }
 }

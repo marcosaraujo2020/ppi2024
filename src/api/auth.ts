@@ -34,7 +34,7 @@ async function signup(req: Request, res: Response) {
     const { nome, email, senha } = signUpJson(req.body);
     // se nome já é usado, então CONFLICT
     if (await db.fetch("SELECT id FROM usuario WHERE nome = ? OR email = ?", nome, email)) {
-        return res.status(CONFLICT).send();
+        throw new StatusException(CONFLICT);
     }
     // cria uma sessão aleatória
     const sessao = await generateRandomSHA256Hash();
@@ -55,8 +55,8 @@ async function login(req: Request, res: Response) {
     // salva a nova sessão no banco
     const result = await db.execute(`UPDATE usuario SET sessao = ?, sessao_validade = DATETIME('now', '+${sessionMaxAgeSeconds} seconds') WHERE email = ? AND senha = ?`, sessao, email, senha);
     if (result.changes === 0) {
-        // se nada foi removido então FORBIDDEN
-        return res.status(FORBIDDEN).send();
+        // se nada foi removido então UNAUTHORIZED
+        throw new StatusException(UNAUTHORIZED);
     }
     console.log(await db.query("SELECT nome, sessao, sessao_validade FROM usuario"));
     // retorna a resposta com o header que salva a sessão no cookie
@@ -72,8 +72,8 @@ async function signoff(req: Request, res: Response) {
     // remove o usuário, setando tudo como NULL
     const result = await db.execute("UPDATE usuario SET nome = NULL, email = NULL, senha = NULL, sessao = NULL, sessao_validade = NULL WHERE email = ? AND senha = ?", email, senha);
     if (result.changes === 0) {
-        // se nada foi removido então FORBIDDEN
-        return res.status(FORBIDDEN).send();
+        // se nada foi removido então UNAUTHORIZED
+        throw new StatusException(UNAUTHORIZED);
     }
     return res.cookie(sessionCookieName, "", {
         path: "/",
@@ -86,14 +86,15 @@ async function logoff(req: Request, res: Response) {
     const sessao = getSessao(req);
     // se não tiver sessão então UNAUTHORIZED
     if (!sessao) {
-        return res.status(UNAUTHORIZED).send();
+        throw new StatusException(UNAUTHORIZED);
     }
     // remove a sessão do banco
     const result = await db.execute("UPDATE usuario SET sessao = NULL, sessao_validade = NULL WHERE sessao = ? AND datetime(sessao_validade) > datetime('now')", sessao);
     if (result.changes === 0) {
-        // se nada foi removido então FORBIDDEN
-        return res.status(FORBIDDEN).send();
+        // se nada foi removido então UNAUTHORIZED
+        throw new StatusException(UNAUTHORIZED);
     }
+    // retorna uma resposta que vai apagar o cookie no navegador
     return res.cookie(sessionCookieName, "", {
         path: "/",
         httpOnly: true,
@@ -101,25 +102,23 @@ async function logoff(req: Request, res: Response) {
     }).send();
 }
 async function usuario(req: Request, res: Response) {
+    // obtém o usuário atualmente logado
     const user = await getUsuario(req);
-    return res.send(user);
+    // retorna isso como json
+    return res.json(user);
 }
 
 async function generateRandomSHA256Hash() {
-    // Generate a random string
+    // cria uma string aleatória para servir de base
     const randomString = Math.random().toString(36).substring(2);
-
-    // Convert the random string into a Uint8Array
-    const encoder = new TextEncoder();
-    const data = encoder.encode(randomString);
-
-    // Hash the data using SHA-256
+    // transforma em um Uint8Array
+    const data = new TextEncoder().encode(randomString);
+    // aplica o hash sha256
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-
-    // Convert the hashBuffer to a hexadecimal string
+    // faz um array de números a partir do array de bytes
     const hashArray = Array.from(new Uint8Array(hashBuffer));
+    // transforma em hexadecimal
     const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-
     return hashHex;
 }
 
@@ -139,7 +138,7 @@ export async function getUsuario(req: Request): Promise<User> {
     // obtém o usuário do banco
     const user = sessao && await db.fetch("SELECT id, nome, email, admin FROM usuario WHERE sessao = ? AND datetime(sessao_validade) > datetime('now')", sessao);
     if (!user) throw new StatusException(UNAUTHORIZED);
-    return user
+    return user;
 }
 
 /** retorna um FORBIDDEN caso o usuario não seja admin */
