@@ -23,8 +23,10 @@ export function parseId(id: string): number {
 /** essa classe é capturada por catchApiExceptions para retornar erros com status de forma mais prática */
 export class StatusException {
     public status: number;
-    constructor(status: number) {
+    public body: any;
+    constructor(status: number, body?: any) {
         this.status = status;
+        this.body = body;
     }
 }
 
@@ -34,7 +36,11 @@ export function catchApiExceptions<T>(api: (req: Request<T>, res: Response, next
             await api(req, res, next);
         } catch (e) {
             if (e instanceof StatusException) {
-                res.status(e.status).send();
+                if (e.body === undefined) {
+                    res.status(e.status).send();
+                } else {
+                    res.status(e.status).json(e.body);
+                }
             } else {
                 console.log(e);
                 res.status(INTERNAL_SERVER_ERROR).send();
@@ -51,9 +57,9 @@ export function expectFound<T>(value: T): T & {} {
     return value;
 }
 
-/** dá um 404 se changes for zero */
-export function expectChanges(value: {lastID: number, changes: number}): void {
-    if (!value.changes) {
+/** dá um 404 se changes for zero, ou seja quando nada for alterado no banco porque não foi encontrado */
+export function expectChanges(value: { changes: number }): void {
+    if (value.changes == 0) {
         throw new StatusException(NOT_FOUND);
     }
 }
@@ -65,7 +71,10 @@ export function validator<A, B extends ZodTypeDef, C>(validator: ZodType<A, B, C
         if (result.success) {
             return result.data;
         } else {
-            throw new StatusException(BAD_REQUEST);
+            throw new StatusException(BAD_REQUEST, {
+                error: "zod error",
+                cause: result.error
+            });
         }
     }
 }
