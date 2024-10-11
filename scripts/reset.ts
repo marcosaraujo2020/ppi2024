@@ -67,7 +67,7 @@ async function populate() {
         (1, 1, 'Queria saber como é que se clona um objeto recursivamente, para poder mudar o novo objeto sem afetar o objeto original'),
         (1, 2, 'Tem uma nova api que é structuredClone, https://developer.mozilla.org/en-US/docs/Web/API/structuredClone mas se não estiver disponível onde você precisar também dá para usar JSON.stringify seguido por JSON.parse'),
         (2, 2, 'No linux, como faço para apgar todos os node_modules de uma pasta recursivamente'),
-        (2, 1, 'Dá para gerar os comandos para apagar os arquivos com (find -name node_modules -type d -printf "rm -rf -- ''%p''\\n"), se estiver tudo certo, você pode repassar para o shell assim: (find -name node_modules -type d -printf "rm -rf -- ''%p''\n" | sh)');
+        (2, 1, 'Dá para gerar os comandos para apagar os arquivos com (find -name node_modules -type d -printf "rm -rf -- ''%p''\\n"), se estiver tudo certo, você pode repassar para o shell assim: (find -name node_modules -type d -printf "rm -rf -- ''%p''\\n" | sh)');
     `);
 }
 
