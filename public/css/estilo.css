@@ -364,21 +364,17 @@ form button:hover {
     color: white;
 }
 
-.icon-user, .icon-user-topico, .icon-user-mensagem {
+.icon-user {
     text-align: center;
     padding: 3px;
     border-radius: 5px;
 }
 
-.icon-user > p, .icon-user-topico > p, .icon-user-mensagem > p {
+.icon-user > p {
     color: white;
     font-family: monospace;
     margin: 0%;
 }
-
-/* .icon-user-topico, .icon-user-mensagem {
-    margin-right: 150px;
-} */
 
 #icon-logout{
     color: white;
