@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fórum</title>
+    <title>Thread - Sub-Fórum</title>
     <link rel="stylesheet" href="css/estilo.css">
-    <link rel="shortcut icon" href="imagens/forum_17520275.png" type="image/x-icon">
+    <link rel="shortcut icon" href="imagens/message_7224937.png" type="image/x-icon">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />   
     <script src="js/api.js"></script>
     <script src="js/app-forum.js"></script>
@@ -13,14 +13,14 @@
 
 <body>
     <header class="cabecalho">
+        
         <div class="titulo">
-
-
+           
             <a href="forum.html">
                 <img src="imagens/forum_17520275.png" id="logo" alt="logo">
                 <h1>Fórum do Dev | </h1>
             </a>
-            
+
             <nav class="navbar">
                 <span class="material-symbols-outlined"data-toggle="tooltip" title="Pesquisar" id="search-submit">search</span>
                 <input type="text" name="temas" id="search-input">
@@ -38,7 +38,7 @@
             <span class="material-symbols-outlined" id="icon-user" data-toggle="tooltip" title="Usuário">account_circle</span>
             <p id="user-name">User</p>
         </div>
-
+        
         <div class="icon-logout">
             <a href="#" id="logout-btn"><span class="material-symbols-outlined" id="icon-logout" data-toggle="tooltip" title="Sair">logout</span></a>
         </div>
@@ -46,34 +46,17 @@
     </header>
 
     <main class="principal">
-     
-       <!--  <section type="submit" id="formulario" class="oculto">
-            <form id="novoTopicoForm">
-                <h2>Novo Tópico</h2>
-                <label for="tecnologia">Tecnologia:</label>
-                <select name="tecnologia" id="tecnologia">
-                    <option value="1">Javascript</option>
-                    <option value="2">Linux</option>
-                    <option value="3">Python</option>
-                </select>
-                <br>
-                <label for="titulo">Título:</label>
-                <input type="text" id="titulo" name="titulo" required>
-                <br>
-                <label for="conteudo">Conteúdo:</label>
-                <textarea id="conteudo" name="conteudo" required rows="9" style="min-height: 9lh;"></textarea>
-                <br>
-                <button type="submit" id="btn-enviar"><span class="material-symbols-outlined">add</span> Cria tópico</button>
-            </form>
-        </section> -->
 
-
-        <section id="teste" class="topico">
-            <div class="tema"><h4>Sub-Fórums</h4></div>
+        <h3 id="titulo-topico-mensagem"></h3>
+        
+        <section id="mensagem-topico" class="topico-mensagem">
+            
+            <div id="tema-topico" class="tema-topico"></div>
         </section>
-
     </main>
 
     <footer></footer>
 </body>
+
+
 </html>

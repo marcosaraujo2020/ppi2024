@@ -225,6 +225,57 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
 
+
+    async function carregarResultadosBusca(busca) {
+        try {
+
+            const tema_topico = document.getElementById("tema-topico");
+    
+            const h4 = criarElemento('h4', '', `Resultados da busca por "${busca}"`);
+            const p = criarElemento('p');
+
+            tema_topico.appendChild(h4)
+            tema_topico.appendChild(p)
+           
+            const mensagem_topico = document.getElementById("mensagem-topico");
+            const buscaResponse = await api.busca(busca);
+            const mensagens = buscaResponse.body.rows;
+            
+            mensagens.forEach(element => {
+                const post_forum_mensagem = criarElemento('article', 'post-forum-mensagem');
+
+
+                const ancora = criarElemento('a', 'search-input');
+                ancora.href = 'mensagem.html?id=' + element.topico_id;
+    
+                const titulo_topico = criarElemento('h4', 'titulo-topico', element.topico_titulo);
+    
+                ancora.appendChild(titulo_topico);
+                post_forum_mensagem.appendChild(ancora);
+    
+                
+                const conteudo_mensagem = criarElemento('p', '', element.texto, 'conteudo-mensagem');
+                const autor_data_mensagem = criarElemento('p', 'autor-data-mensagem', `Comentado por ${element.usuario_nome}, ${element.created_at}`);
+                const hr = criarElemento('hr');
+    
+                post_forum_mensagem.appendChild(conteudo_mensagem);
+                post_forum_mensagem.appendChild(autor_data_mensagem);
+                mensagem_topico.appendChild(post_forum_mensagem);
+                mensagem_topico.appendChild(hr);
+            });
+        } catch (error) {
+            console.error("Erro ao obter mensagem:", error);
+            exibirErro('titulo-mensagem', 'conteudo-mensagem', "Não foi possível carregar o conteúdo da mensagem.");
+        }
+    }
+    
+
+    if (window.location.pathname.includes('busca.html')) {
+        const busca = getQueryParameter('q');
+        carregarResultadosBusca(busca);
+    }
+    
+
     
     async function criarTopico(idSubforum) {
 
@@ -322,8 +373,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
+    const search_submit =  document.getElementById("search-submit");
+    const search_input =  document.getElementById("search-input");
+    search_submit.addEventListener("click", fazBusca);
+    search_input.addEventListener("keydown", (ev) => {
+        if (ev.key == "Enter") {
+            fazBusca();
+        }
+    })
+    search_input.value = getQueryParameter('q');
 
-
+    function fazBusca() {
+        if (search_input.value.trim())
+        document.location = "/busca.html?q=" + search_input.value.trim();
+    }
 
 });
 

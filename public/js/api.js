@@ -67,6 +67,7 @@ const api = function () {
             /** @returns {Api<void>} */
             delete: async (id) => DELETE(`/api/mensagem/${id}`),
         },
+        /** @returns {Api<{rows: Mensagem[]}>} */
         busca: async (texto) => GET(`/api/busca?q=${encodeURIComponent(texto)}`),
     };
 

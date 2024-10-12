@@ -108,20 +108,24 @@ li a {
 
 .navbar {
     margin: 10px 0px 0px 20px;
+    display: flex;
+    align-items: center;
 }
 
-
-
-#list-search {
+#search-submit {
+    cursor: pointer;
+}
+#search-input {
     background-color: transparent;
     border: solid;
     border-width: 2px;
     border-color: var(--cor0);
     color: var(--cor0);
     width: 10vw;
-    height: 5vh;
+    height: 1.5lh;
     border-radius: 5px;
     margin: 0px;
+    margin-left: 10px;
 }
 
 
