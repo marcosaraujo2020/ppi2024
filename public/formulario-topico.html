@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sub-Fórum</title>
-   
+    <title>Fórum</title>
+
     <link rel="stylesheet" href="css/estilo.css">
-    <link rel="shortcut icon" href="imagens/bate-papo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="imagens/registro-online.png" type="image/x-icon">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />   
+
+   
+
+
     <script src="js/api.js"></script>
     <script src="js/app-forum.js"></script>
 </head>
 
-
 <body>
     <header class="cabecalho">
-        
         <div class="titulo">
+
 
             <a href="forum.html">
                 <img src="imagens/forum_17520275.png" id="logo" alt="logo">
@@ -48,16 +51,33 @@
     </header>
 
     <main class="principal">
-        
-        <h3 id="titulo-sub-forum"></h3>
-               
-        <section id="topico-sub-forum">
+     
+        <section id="novo-topico">
             <div class="tema-sub-forum">
-                <h4>Tópicos</h4>
-
-                <a href="#"><span class="material-symbols-outlined" data-toggle="tooltip" title="Novo tópico" id="novotopico">post_add</span></a>
+                <h4>Novo Tópico</h4>
+            </div>
+            <div id="formulario">
+                <form action="" method="post" id="novoTopicoForm">
+                    <div>
+                        <label for="titulo-topico">Título</label>
+                        <input name="titulo-topico" id="titulo-topico" class="titulo-topico" required></input>
+                    </div>
+                    <div>
+                        <label for="comentario-topico">Primeiro comentário</label>
+                        <textarea name="comentario-topico" id="comentario-topico" class="comentario-topico" required></textarea>
+                    </div>
+                    <div class="botoes">
+                        <button type="submit" id="btn-enviar-topico">Enviar</button>
+                    </div>
+                    </form>
+                    </form>
+                </div>
+                </form>
+                </div>
             </div>
         </section>
+
+
 
     </main>
 

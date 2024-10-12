@@ -2,7 +2,7 @@
 :root {
     --cor0: #FFFFFF;
     --cor1: #2A8DBB;
-    --cor2: #397591;
+    --cor2: rgb(57, 117, 145);
     --cor3: #0DA3E6;
     --cor4: #395866;
     --cor5: #2B363C;
@@ -619,3 +619,58 @@ input.titulo-topico {
     align-items: center;
 }
  */
+
+ /* Formulário cadastro de tópico */
+
+ .formulario-topico {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--cor2);
+    background-image: radial-gradient(left, rgb(57, 117, 145), rgb(57, 151, 181), rgb(50, 176, 200));
+    width: 60vw;
+    margin-top: 50px;
+    padding: 0px 10px 20px 10px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px #395866;
+ }
+
+ .form-topico {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+ }
+
+
+
+ .caixa-input-topico-novo {
+    background-color: var(--cor0);
+    color: var(--cor6);
+    height: 5vh;
+ }
+
+ .campo-topico {
+    width: 50vw;
+    background-color: var(--cor0);
+    color: var(--cor6);
+ }
+ 
+ .caixa-input-topico-novo{
+    width: 50vw;
+    background-color: var(--cor0);
+    color: var(--cor6);
+ }
+
+.botoes-form-topico {
+    display: flex;    
+}
+
+ .btn-enviar-form-topico, .btn-cancelar-form-topico {
+    background-color: var(--cor6);
+    color: var(--cor0);
+    margin-right: 10px;
+ }
+
+ .btn-enviar-form-topico:hover, .btn-cancelar-form-topico:hover {
+    background-color: var(--cor4);
+ }
