@@ -144,12 +144,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
             const topicoResponse = await api.topico.get(topicoId);
             const topico = topicoResponse.body;
-            
+
+          
             const h4 = criarElemento('h4', '', `Tópico: ${topico.titulo}`);
             const p = criarElemento('p', 'autor-topico', `${topico.usuario_nome}, ${topico.created_at}`);
 
             tema_topico.appendChild(h4)
             tema_topico.appendChild(p)
+
            
             document.getElementById("novoComentarioForm").addEventListener("submit", (ev) => {
                 ev.preventDefault();
@@ -218,6 +220,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (window.location.pathname.includes('mensagem.html')) {
         const mensagemId = getQueryParameter('id');  
         
+        document.getElementById('novoComentarioForm').addEventListener("submit", async function (event) {
+            event.preventDefault();
+            
+            if (window.location.pathname.includes('mensagem.html')) {
+                const topicoId = getQueryParameter('topico_id');
+                criarComentario(Number(topicoId));
+            }
+        });
         if (mensagemId) {
             carregarMensagensTopico(mensagemId);
         } else {
@@ -336,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Tópico criado com sucesso!');
                 
                 document.getElementById('novoTopicoForm').reset();
-                window.history.back();
+                window.location.href = document.referrer;
 
             } else {
                 console.error('Erro ao criar o post:', resultado);
@@ -348,41 +358,32 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
 
+ 
 
-    /* async function criarComentario(idSubforum) {
+    async function criarComentario(idTopico) {
 
-        document.getElementById('novoTopicoForm').addEventListener("submit", async function (event) {
-            event.preventDefault();
-            
-            const titulo_topico = document.getElementById('comentario-topico').value.trim();
-        
-            const novoPost = {
-                sub_forum_id:idSubforum, 
-                titulo: titulo_topico
+        try {
+            const comentario = document.querySelector('.comentario-topico').value.trim();
+    
+            const novaMensagem = {
+                topico_id:idTopico, 
+                texto: comentario
             };
-        
-            try {
-                const resultado = await api.topico.post(novoPost);
-                
-                if (resultado.status === 200) {
-                    alert('Tópico criado com sucesso!');
-                    document.getElementById('novaPostagemForm').reset();
-                } else {
-                    console.error('Erro ao criar o post:', resultado);
-                }
-            } catch (error) {
-                console.error('Erro:', error);
+            const resultado = await api.mensagem.post(novaMensagem);
+            
+            if (resultado.status === 200) {
+                alert('Mensagem criada com sucesso!');
+                document.getElementById('novoComentarioForm').reset();
+            } else {
+                console.error('Erro ao criar o post mensagem:', resultado);
             }
+        } catch (error) {
+            console.error('Erro:', error);
+        }
+
+    };
     
-            setTimeout(function() {
-                novoFormulario.classList.add('oculto');
-            }, 2000);
-    
-            location.reload();
-        });
-    
-    }
- */
+ 
 
 /*     async function deletarTopico(idTopico) {
         try {
@@ -394,7 +395,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     } */
        
-
 
     api.auth.user().then(x => {
         if (x.status == 200) {
