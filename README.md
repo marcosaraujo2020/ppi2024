@@ -2,6 +2,9 @@
 
 Um fórum para a discussão de tudo relacionado a desenvolvimento de software
 
+*Marcos Araújo Silva*
+*Germano Barbosa da Silva Júnior*
+
 Este fórum contém quatro entidades, usuário, sub-forums, tópicos e mensagens
 
 Os sub-forums englobam um domínio na programação como linux ou javascript,
